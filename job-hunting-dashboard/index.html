@@ -4,10 +4,69 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FORGE — Mission Control</title>
+<link rel="stylesheet" href="/static/css/app.css?v=5">
 <script>(function(){var t=localStorage.getItem('forge-theme')||'dark';document.documentElement.setAttribute('data-theme',t);})();</script>
 </head>
 <body>
-<div id="app"></div>
-<script type="module" src="/static/src/app/bootstrap.js?v=3"></script>
+<a class="skip-link" href="#fx-main">Skip to main content</a>
+<div id="fx-atmosphere" aria-hidden="true">
+  <div id="fx-glow-gold"></div>
+  <div id="fx-glow-blue"></div>
+  <div id="fx-grid"></div>
+</div>
+<div id="app" class="app-shell">
+  <aside id="fx-sidebar" aria-label="Primary navigation">
+    <div id="fx-brand" aria-label="FORGE">
+      <span class="diamond" aria-hidden="true">◆</span>
+      <span class="brand-text">FORGE</span>
+    </div>
+    <nav id="fx-nav" aria-label="Main pages">
+      <button class="nav-item" type="button" data-view="overview"><span class="nav-icon" data-icon="overview" aria-hidden="true"></span><span>Overview</span></button>
+      <button class="nav-item" type="button" data-view="jobs"><span class="nav-icon" data-icon="jobs" aria-hidden="true"></span><span>Jobs</span></button>
+      <button class="nav-item" type="button" data-view="custom"><span class="nav-icon" data-icon="custom" aria-hidden="true"></span><span>Custom</span></button>
+      <button class="nav-item" type="button" data-view="cv"><span class="nav-icon" data-icon="cv" aria-hidden="true"></span><span>CV</span></button>
+      <button class="nav-item" type="button" data-view="settings"><span class="nav-icon" data-icon="settings" aria-hidden="true"></span><span>Settings</span></button>
+    </nav>
+    <nav id="fx-nav-footer" aria-label="Reference">
+      <button class="nav-item" type="button" data-view="designref"><span class="nav-icon" data-icon="design" aria-hidden="true"></span><span>Design</span></button>
+    </nav>
+    <section id="sidebar-mini-fleet" aria-label="Agent availability">
+      <div class="mini-row" aria-hidden="true">
+        <div class="mini-agent mini-agent-forge">FRG</div>
+        <div class="mini-agent mini-agent-scout">SCT</div>
+        <div class="mini-agent mini-agent-reader">RDR</div>
+        <div class="mini-agent mini-agent-adapter">ADP</div>
+      </div>
+      <div class="mini-readout"><strong id="mini-online">0</strong> / 04 ONLINE</div>
+    </section>
+  </aside>
+
+  <header id="fx-topbar">
+    <div id="fx-topbar-title">
+      <span class="eyebrow">Mission Control</span>
+      <span id="fx-page-title">Overview</span>
+    </div>
+    <div id="fx-topbar-right" aria-label="System status">
+      <button class="btn btn-ghost shell-icon-btn" id="btn-theme" type="button" title="Toggle theme" aria-label="Toggle theme">☾</button>
+      <button class="btn btn-primary shell-primary-action is-hidden" id="btn-scan-top" type="button"><span id="btn-scan-icon">⚡</span> <span id="btn-scan-text">Scan Now</span></button>
+      <span class="chip" id="chip-run"><span class="chip-dot off" id="chip-run-dot"></span><span id="chip-run-text">Idle</span></span>
+      <span class="chip" id="chip-model"><span class="chip-dot on"></span><span id="chip-model-text">--</span></span>
+      <span class="chip" id="chip-gw"><span class="chip-dot on"></span>Gateway</span>
+      <span class="chip" id="chip-slack"><span class="chip-dot on"></span>Slack</span>
+      <span class="chip" id="chip-clock"><span data-icon="clock" aria-hidden="true"></span><span id="clock-display" data-clock>--:--:--</span></span>
+    </div>
+  </header>
+
+  <main id="fx-main" tabindex="-1"></main>
+
+  <nav id="fx-mobile-nav" aria-label="Mobile navigation">
+    <button class="mobile-nav-item" type="button" data-view="overview"><span data-icon="overview" aria-hidden="true"></span><span>Overview</span></button>
+    <button class="mobile-nav-item" type="button" data-view="jobs"><span data-icon="jobs" aria-hidden="true"></span><span>Jobs</span></button>
+    <button class="mobile-nav-item" type="button" data-view="custom"><span data-icon="custom" aria-hidden="true"></span><span>Custom</span></button>
+    <button class="mobile-nav-item" type="button" data-view="cv"><span data-icon="cv" aria-hidden="true"></span><span>CV</span></button>
+    <button class="mobile-nav-item" type="button" data-view="settings"><span data-icon="settings" aria-hidden="true"></span><span>Settings</span></button>
+  </nav>
+</div>
+<script type="module" src="/static/src/app/bootstrap.js?v=4"></script>
 </body>
 </html>

@@ -1,0 +1,73 @@
+<section class="fx-view" data-view="jobs" hidden aria-labelledby="jobs-title">
+  <section class="card card-accent page-hero">
+    <div class="page-hero-row">
+      <div>
+        <p class="eyebrow-line">Pipeline Matches</p>
+        <h1 class="hero-title" id="jobs-title">Jobs</h1>
+        <p class="page-hero-copy">Review ranked opportunities, update status, inspect descriptions, and tailor CVs without leaving the table.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="card card-accent" aria-labelledby="jobs-table-title">
+    <h2 class="card-label" id="jobs-table-title">Top Matches</h2>
+    <div class="jobs-toolbar" id="jobs-stats">
+      <span>Found: <strong id="jobs-found">--</strong></span>
+      <span>Matched: <strong id="jobs-matched">--</strong></span>
+      <span>Tailored: <strong id="jobs-tailored">--</strong></span>
+      <span class="jobs-auto-scan">
+        <label class="check-label"><input type="checkbox" id="auto-scan-toggle"><span>Auto-Scan</span></label>
+        <select class="fx-select is-hidden" id="auto-scan-cadence" aria-label="Auto-scan cadence">
+          <option value="2h">Every 2h</option><option value="4h">Every 4h</option><option value="6h">Every 6h</option><option value="8h">Every 8h</option><option value="12h">Every 12h</option><option value="daily" selected>Daily · 9 AM</option>
+        </select>
+        <span class="schedule-next is-hidden" id="schedule-next"></span>
+      </span>
+    </div>
+
+    <div class="filter-row" id="source-filter-row">
+      <span class="filter-label">Source</span>
+      <span class="muted-small">Loading…</span>
+    </div>
+
+    <div class="table-scroll">
+      <table class="fx-table" id="jobs-table">
+        <thead>
+          <tr>
+            <th scope="col" class="table-col-rank">#</th>
+            <th scope="col" class="table-col-score">Score</th>
+            <th scope="col">Role</th>
+            <th scope="col">Company</th>
+            <th scope="col">Location</th>
+            <th scope="col" class="table-col-source">Source</th>
+            <th scope="col" class="table-col-status">Status</th>
+            <th scope="col" class="table-col-flags">Flags</th>
+            <th scope="col" class="table-col-actions">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="jobs-rows">
+          <tr><td colspan="9" class="empty-row">No matches yet. Run a scan to find jobs.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <nav id="jobs-pagination" class="jobs-pagination is-hidden" aria-label="Jobs pagination"></nav>
+  </section>
+
+  <section class="card" id="jobs-legend" aria-labelledby="jobs-legend-title">
+    <h2 class="card-label" id="jobs-legend-title">Key</h2>
+    <div class="legend-grid">
+      <span><strong class="legend-strong stat-sky">●≥65</strong> Strong match</span>
+      <span><strong class="legend-strong stat-gold">●50–64</strong> Moderate match</span>
+      <span><strong class="legend-strong stat-sky">NEW</strong> First time seen</span>
+      <span><strong class="legend-strong">×N</strong> Seen N times</span>
+      <span><strong class="legend-strong stat-gold">CV✓</strong> Tailored CV exists</span>
+      <span><strong class="legend-strong stat-sky">[EN]</strong> English required</span>
+      <span><span class="btn btn-primary legend-token">Tailor ▸</span> Promote this job</span>
+      <span><span class="btn btn-ghost legend-token">JD</span> Open job description</span>
+      <span><span class="btn btn-ghost legend-token">CV</span> View tailored CV</span>
+      <span><span class="btn btn-ghost legend-token">DOC</span> Download .docx</span>
+      <span><span class="btn btn-ghost legend-token">PDF</span> Download PDF</span>
+      <span><span class="legend-icon">↗</span> Original posting</span>
+    </div>
+  </section>
+</section>

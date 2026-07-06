@@ -1,5 +1,4 @@
 
-import { injectStyles } from '../styles/styles.js';
 import { buildAppShell } from './appShell.js';
 import { createRouter } from './router.js';
 import { createOverviewPage } from '../features/overview/overviewPage.js';
@@ -8,6 +7,7 @@ import { createCustomPage } from '../features/custom/customPage.js';
 import { createCvPage } from '../features/cv/cvPage.js';
 import { createSettingsPage } from '../features/settings/settingsPage.js';
 import { createDesignPage } from '../features/design/designPage.js';
+import { loadTemplates } from '../shared/templates.js';
 
 const VERSION = 3;
 
@@ -21,8 +21,11 @@ function checkForDemoData() {
   }, 2000);
 }
 
-export function bootstrap() {
-  injectStyles();
+export async function bootstrap() {
+  await loadTemplates({
+    overview: '/static/templates/overview.html?v=4',
+    jobs: '/static/templates/jobs.html?v=4',
+  });
   const router = createRouter();
   const pages = [
     createOverviewPage(),
@@ -37,7 +40,7 @@ export function bootstrap() {
   pages.forEach((page) => main.appendChild(page.render()));
   router.onChange((viewId) => {
     const scanButton = document.getElementById('btn-scan-top');
-    if (scanButton) scanButton.style.display = viewId === 'jobs' ? 'inline-flex' : 'none';
+    if (scanButton) scanButton.classList.toggle('is-hidden', viewId !== 'jobs');
   });
   router.switchTo('overview');
   pages.forEach((page) => page.start?.());
@@ -45,4 +48,9 @@ export function bootstrap() {
   console.log('FORGE Dashboard v' + VERSION);
 }
 
-document.addEventListener('DOMContentLoaded', bootstrap);
+document.addEventListener('DOMContentLoaded', () => {
+  bootstrap().catch((error) => {
+    console.error('Dashboard bootstrap failed:', error);
+    document.body.innerHTML = '<main class="bootstrap-error">Dashboard failed to load.</main>';
+  });
+});

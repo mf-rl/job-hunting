@@ -24,6 +24,7 @@ FORGE_HOME = Path(os.environ.get("FORGE_SYSTEM_DIR") or os.path.expanduser("~/jo
 HERMES_HOME = Path(os.environ.get("HERMES_HOME") or os.path.expanduser("~/.hermes"))
 VENV_PYTHON = HERMES_HOME / "hermes-agent" / "venv" / "bin" / "python3"
 LOG_SCRIPT = HERMES_HOME / "agents" / "_shared" / "log-task-local.sh"
+NO_MODEL_REQUIRED = "none - not required"
 
 
 def _read_active_model(profile: str = "") -> str:
@@ -313,7 +314,7 @@ def main():
     args = parser.parse_args()
 
     url = args.url
-    log_activity("job-reader", f"reading job: {url[:80]}", "running")
+    log_activity("job-reader", f"reading job: {url[:80]}", "running", NO_MODEL_REQUIRED)
 
     # Step 1: LinkedIn-specific: try guest API first (avoids login-wall)
     page_text = None
@@ -370,10 +371,15 @@ def main():
                     "full_text_preview": page_text[:5000],
                 }
                 print(json.dumps(result, indent=2))
-                log_activity("job-reader", f"extracted JD (regex): {extracted.get('full_job_title', '?')} @ {extracted.get('company_name', '?')}", "completed")
+                log_activity("job-reader", f"extracted JD (regex): {extracted.get('full_job_title', '?')} @ {extracted.get('company_name', '?')}", "completed", NO_MODEL_REQUIRED)
                 return
 
-    log_activity("job-reader", f"failed to extract JD from: {url[:80]}", "failed")
+    log_activity(
+        "job-reader",
+        f"failed to extract JD from: {url[:80]}",
+        "failed",
+        "" if page_text else NO_MODEL_REQUIRED,
+    )
     print(json.dumps({"error": "Could not extract job description", "url": url}), file=sys.stderr)
     sys.exit(1)
 

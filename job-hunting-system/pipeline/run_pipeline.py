@@ -25,6 +25,7 @@ PIPELINE_DIR = FORGE_HOME / "pipeline"
 PIPELINE_DB = FORGE_HOME / "pipeline.db"
 RUN_FLAG = FORGE_HOME / "pipeline" / ".run-running"
 LOG_SCRIPT = HERMES_HOME / "agents" / "_shared" / "log-task-local.sh"
+NO_MODEL_REQUIRED = "none - not required"
 
 
 def _get_db():
@@ -63,7 +64,7 @@ def run_cmd(cmd: list, label: str, timeout: int = 300) -> str:
     return r.stdout
 
 
-def log_activity(agent: str, task: str, status: str, model: str = "deepseek/deepseek-v4-flash"):
+def log_activity(agent: str, task: str, status: str, model: str = NO_MODEL_REQUIRED):
     """Log to agent-logs.db via the shell script."""
     subprocess.run(
         ["bash", str(LOG_SCRIPT), agent, task, status, model],

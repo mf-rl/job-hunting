@@ -1,0 +1,109 @@
+<section class="fx-view active" data-view="overview" aria-labelledby="overview-title">
+  <section class="card card-accent page-hero">
+    <div class="page-hero-row">
+      <div>
+        <p class="eyebrow-line">Good Morning</p>
+        <h1 class="hero-title" id="overview-title">FORGE · Job-Hunting Mission Control</h1>
+        <p class="page-hero-copy"><span id="overview-date">Today</span> — Coordinating <strong>Forge</strong>, <strong>Scout</strong>, <strong>Job Reader</strong>, and <strong>CV Adapter</strong> to find your next opportunity.</p>
+      </div>
+      <div class="hero-actions" id="hero-chips">
+        <span class="chip"><span class="chip-dot on"></span><span id="chip-model-hero">--</span></span>
+        <span class="chip"><span class="chip-dot on"></span>Gateway</span>
+        <span class="chip"><span class="chip-dot on"></span>Slack</span>
+        <button class="btn btn-primary inline-action" id="btn-find" type="button"><span id="btn-find-icon">⚡</span><span id="btn-find-text">Find Jobs</span></button>
+      </div>
+    </div>
+  </section>
+
+  <div class="grid grid-2 section-stack">
+    <article class="card card-accent gauge-card" id="gauge-token-card">
+      <h2 class="card-label">Tokenized Load</h2>
+      <div class="gauge-wrap">
+        <div class="gauge-ring" id="gauge-tokens-ring">
+          <svg width="140" height="140" viewBox="0 0 140 140" aria-hidden="true">
+            <circle class="gauge-bg" cx="70" cy="70" r="58" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="8"></circle>
+            <circle class="gauge-arc" id="gauge-tokens-arc" cx="70" cy="70" r="58" fill="none" stroke="url(#goldGrad)" stroke-width="8" stroke-linecap="round" stroke-dasharray="364.42" stroke-dashoffset="364.42" data-gauge-arc="tokens"></circle>
+            <defs><linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#EAC266"></stop><stop offset="100%" stop-color="#D4A84A"></stop></linearGradient></defs>
+          </svg>
+          <div class="gauge-value" data-gauge-value="tokens">--</div>
+        </div>
+        <p class="gauge-sub-text"><span data-gauge-sub="tokens">--</span> / <span data-gauge-total="tokens">1M</span> used</p>
+        <p class="stats-inline"><span>Matched: <strong class="stat-gold" id="gauge-matched-sub">--</strong></span><span>Read: <strong class="stat-sky" id="gauge-read-sub">--</strong></span></p>
+      </div>
+    </article>
+
+    <article class="card card-accent gauge-card" id="gauge-jobs-card">
+      <h2 class="card-label">Jobs Indexed</h2>
+      <div class="gauge-wrap">
+        <div class="gauge-ring" id="gauge-jobs-ring">
+          <svg width="140" height="140" viewBox="0 0 140 140" aria-hidden="true">
+            <circle class="gauge-bg" cx="70" cy="70" r="58" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="8"></circle>
+            <circle class="gauge-arc" id="gauge-jobs-arc" cx="70" cy="70" r="58" fill="none" stroke="url(#goldGrad)" stroke-width="8" stroke-linecap="round" stroke-dasharray="364.42" stroke-dashoffset="364.42" data-gauge-arc="jobs"></circle>
+          </svg>
+          <div class="gauge-value" data-gauge-value="jobs">--</div>
+        </div>
+        <p class="gauge-sub-text">total across all sources</p>
+        <p class="stats-inline"><span>Matched: <strong class="stat-gold" id="gauge-matched2-sub">--</strong></span><span>Tailored: <strong class="stat-coral" id="gauge-tailored-sub">--</strong></span></p>
+      </div>
+    </article>
+  </div>
+
+  <section class="fleet-grid" id="fleet-grid" aria-label="Agent fleet">
+    <article class="card fleet-card" data-agent="forge">
+      <div class="fleet-avatar">FRG</div><h2 class="fleet-name">Forge</h2><p class="fleet-role">Coordinator</p>
+      <p class="fleet-status live"><span class="fleet-status-dot"></span><span class="fleet-label">LIVE</span></p>
+      <div class="fleet-count stat-gold" id="fcnt-forge">--</div><div class="fleet-rate" id="frate-forge">--</div><div class="fleet-last" id="flast-forge">--</div><div class="fleet-model" id="fmodel-forge">--</div>
+    </article>
+    <article class="card fleet-card" data-agent="scout">
+      <div class="fleet-avatar">SCT</div><h2 class="fleet-name">Scout</h2><p class="fleet-role">Job Search</p>
+      <p class="fleet-status live"><span class="fleet-status-dot"></span><span class="fleet-label">LIVE</span></p>
+      <div class="fleet-count stat-sky" id="fcnt-scout">--</div><div class="fleet-rate" id="frate-scout">--</div><div class="fleet-last" id="flast-scout">--</div><div class="fleet-model" id="fmodel-scout">--</div>
+    </article>
+    <article class="card fleet-card" data-agent="job-reader">
+      <div class="fleet-avatar">RDR</div><h2 class="fleet-name">Job Reader</h2><p class="fleet-role">JD Analysis</p>
+      <p class="fleet-status live"><span class="fleet-status-dot"></span><span class="fleet-label">LIVE</span></p>
+      <div class="fleet-count stat-gold" id="fcnt-job-reader">--</div><div class="fleet-rate" id="frate-job-reader">--</div><div class="fleet-last" id="flast-job-reader">--</div><div class="fleet-model" id="fmodel-job-reader">--</div>
+    </article>
+    <article class="card fleet-card" data-agent="cv-adapter">
+      <div class="fleet-avatar">ADP</div><h2 class="fleet-name">CV Adapter</h2><p class="fleet-role">CV Tailoring</p>
+      <p class="fleet-status live"><span class="fleet-status-dot"></span><span class="fleet-label">LIVE</span></p>
+      <div class="fleet-count stat-coral" id="fcnt-cv-adapter">--</div><div class="fleet-rate" id="frate-cv-adapter">--</div><div class="fleet-last" id="flast-cv-adapter">--</div><div class="fleet-model" id="fmodel-cv-adapter">--</div>
+    </article>
+  </section>
+
+  <div class="grid grid-3 section-stack">
+    <section class="card span-2" aria-labelledby="funnel-title">
+      <h2 class="card-label" id="funnel-title">Conversion Funnel</h2>
+      <div class="funnel" id="ov-funnel">
+        <div class="funnel-item"><div class="funnel-bar funnel-found" data-funnel="found"></div><p class="funnel-label">Found<br><span class="funnel-value" data-funnel="found-value">--</span></p></div>
+        <div class="funnel-item"><div class="funnel-bar funnel-matched" data-funnel="matched"></div><p class="funnel-label">Matched<br><span class="funnel-value" data-funnel="matched-value">--</span></p></div>
+        <div class="funnel-item"><div class="funnel-bar funnel-read" data-funnel="read"></div><p class="funnel-label">Read<br><span class="funnel-value" data-funnel="read-value">--</span></p></div>
+        <div class="funnel-item"><div class="funnel-bar funnel-cvs" data-funnel="cvs"></div><p class="funnel-label">CVs Done<br><span class="funnel-value" data-funnel="cvs-value">--</span></p></div>
+      </div>
+    </section>
+    <section class="card" aria-labelledby="status-title">
+      <h2 class="card-label" id="status-title">Status</h2>
+      <div class="status-list" id="ov-status">
+        <p class="status-row"><span>Model</span><span class="status-value-accent" id="ov-model">--</span></p>
+        <p class="status-row"><span>Actions (24h)</span><span class="status-value" id="ov-24h">--</span></p>
+        <p class="status-row"><span>Success Rate</span><span class="status-value" id="ov-success-rate">--</span></p>
+        <p class="status-row"><span>Last Activity</span><span class="status-value" id="ov-last-activity">--</span></p>
+      </div>
+    </section>
+  </div>
+
+  <section class="card" aria-labelledby="activity-title">
+    <h2 class="card-label" id="activity-title">Activity Stream</h2>
+    <div id="activity-stream"><p class="empty-row">Loading…</p></div>
+  </section>
+
+  <section class="card" id="ov-matches-card" hidden aria-labelledby="matches-title">
+    <h2 class="card-label" id="matches-title">Top Matches</h2>
+    <div class="table-scroll">
+      <table class="fx-table" id="ov-matches-table">
+        <thead><tr><th scope="col">#</th><th scope="col">Score</th><th scope="col">Title</th><th scope="col">Company</th><th scope="col">Location</th><th scope="col" class="align-right">Actions</th></tr></thead>
+        <tbody id="ov-matches-rows"></tbody>
+      </table>
+    </div>
+  </section>
+</section>

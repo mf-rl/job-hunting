@@ -41,9 +41,10 @@ OUTPUT_DIR_MATCHER = FORGE_HOME / "agents" / "matcher" / "outputs"
 
 # Logging
 LOG_SCRIPT = HERMES_HOME / "agents" / "_shared" / "log-task-local.sh"
+NO_MODEL_REQUIRED = "none - not required"
 
 
-def log_activity(task: str, status: str, model: str = "deterministic"):
+def log_activity(task: str, status: str, model: str = NO_MODEL_REQUIRED):
     """Log to agent-logs.db via the shared script."""
     subprocess.run(
         ["bash", str(LOG_SCRIPT), "forge", task[:140], status, model],

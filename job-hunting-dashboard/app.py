@@ -113,6 +113,31 @@ def _get_hermes_model() -> str:
     return "unknown"
 
 
+NO_MODEL_REQUIRED = "none - not required"
+_NON_AI_ACTIVITY_PREFIXES = (
+    "search started:",
+    "scoring started:",
+    "find completed:",
+    "find failed:",
+    "reading job:",
+    "extracted JD (regex):",
+    "blocked: FORGE_ALLOWED_USERS",
+    "cmd:",
+    "find: starting search",
+    "jobs: showing",
+    "promote confirm:",
+    "promote:",
+    "status: showing memory summary",
+)
+
+
+def _normalize_activity_model(entry: dict) -> str:
+    task = entry.get("task_description") or ""
+    if task.startswith(_NON_AI_ACTIVITY_PREFIXES):
+        return NO_MODEL_REQUIRED
+    return entry.get("model_used") or ""
+
+
 def _unlink_quietly(path: Path) -> None:
     try:
         path.unlink()
@@ -292,6 +317,8 @@ async def activity(
             params + [limit],
         )
         entries = _rows_to_list(cursor)
+        for entry in entries:
+            entry["model_used"] = _normalize_activity_model(entry)
         db.close()
         return {"entries": entries, "count": len(entries)}
     except Exception as e:
