@@ -1,0 +1,18 @@
+[Unit]
+Description=Forge Dashboard — Job-Hunting Mission Control Backend
+Documentation=https://github.com/mauricio/forge
+After=network.target
+
+[Service]
+Type=simple
+User=mfrl
+WorkingDirectory=/home/mfrl/job-hunting/job-hunting-dashboard
+ExecStart=/home/mfrl/.hermes/hermes-agent/venv/bin/python /home/mfrl/job-hunting/job-hunting-dashboard/app.py
+Restart=always
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+Environment="HERMES_HOME=/home/mfrl/.hermes"
+
+[Install]
+WantedBy=multi-user.target

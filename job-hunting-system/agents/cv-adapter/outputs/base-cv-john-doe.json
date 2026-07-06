@@ -1,0 +1,90 @@
+{
+  "name": "John Doe",
+  "headline": "Senior Software Engineer",
+  "contact": {
+    "email": "john.doe@email.com",
+    "phone": "+1-555-0123",
+    "location": "San Francisco, CA",
+    "linkedin": ""
+  },
+  "summary": "Senior Software Engineer with 8+ years of experience building distributed systems and cloud-native applications. Expertise in Python, Go, and Kubernetes. Led teams at two FAANG companies delivering high-scale services.",
+  "competencies": [
+    "Distributed Systems",
+    "Cloud-Native Applications",
+    "Kubernetes",
+    "Python",
+    "Go",
+    "Java",
+    "TypeScript",
+    "AWS",
+    "GCP",
+    "PostgreSQL",
+    "Redis",
+    "Kafka",
+    "Elasticsearch",
+    "Terraform",
+    "CI/CD"
+  ],
+  "experience": [
+    {
+      "company": "TechCorp Inc.",
+      "location": "San Francisco, CA",
+      "start": "2020-01",
+      "end": "Present",
+      "role": "Senior Backend Engineer",
+      "bullets": [
+        "Designed and implemented a real-time data pipeline processing 10M+ events/day using Kafka and Flink",
+        "Migrated 50+ microservices from monolithic deployment to Kubernetes, reducing deployment time by 80%",
+        "Led a team of 5 engineers delivering quarterly OKRs ahead of schedule"
+      ]
+    },
+    {
+      "company": "StartupXYZ",
+      "location": "Remote",
+      "start": "2017-03",
+      "end": "2019-12",
+      "role": "Backend Developer",
+      "bullets": [
+        "Built RESTful API layer serving 500K+ daily active users using Python (FastAPI) and PostgreSQL",
+        "Reduced p99 latency from 2.3s to 180ms through query optimization and caching strategy",
+        "Implemented CI/CD pipeline with GitHub Actions, reducing release cycle from 2 weeks to daily"
+      ]
+    }
+  ],
+  "education": [
+    {
+      "institution": "University of California, Berkeley",
+      "degree": "B.S.",
+      "field": "Computer Science",
+      "year": "2017"
+    }
+  ],
+  "skills": [
+    {
+      "category": "Languages",
+      "items": ["Python", "Go", "Java", "TypeScript"]
+    },
+    {
+      "category": "Cloud",
+      "items": ["AWS (ECS, EKS, Lambda)", "GCP", "Kubernetes", "Docker"]
+    },
+    {
+      "category": "Data",
+      "items": ["PostgreSQL", "Redis", "Kafka", "Elasticsearch"]
+    },
+    {
+      "category": "Tools",
+      "items": ["Terraform", "GitHub Actions", "Prometheus", "Grafana"]
+    }
+  ],
+  "languages": [
+    {
+      "lang": "English",
+      "level": "Native"
+    },
+    {
+      "lang": "Spanish",
+      "level": "Fluent"
+    }
+  ]
+}

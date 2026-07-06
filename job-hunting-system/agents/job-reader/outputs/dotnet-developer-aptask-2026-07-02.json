@@ -1,0 +1,62 @@
+{
+  "full_job_title": ".Net Developer",
+  "company_name": "ApTask",
+  "location": "Highland Park, TX",
+  "remote_mentioned": false,
+  "language": "English",
+  "responsibilities": [
+    "Develop WebAPI/Microservices using .Net core stack/SQL server in Agile development environment",
+    "Work with offshore development team based out of India",
+    "Serve in a customer-facing role and communicate directly with customer stakeholders",
+    "Guide and mentor the project team in technical aspects",
+    "Work in Scrum model at Onshore",
+    "Identify risks, plan mitigation, and escalate on time to customers and leaders",
+    "Prioritize work and manage time effectively",
+    "Apply design patterns, practices, and architecting tools (e.g. EA)"
+  ],
+  "required_skills": [
+    "C#",
+    "ASP .Net",
+    ".Net Core",
+    "Web API",
+    "Microservices",
+    "SQL Server",
+    "WebServices",
+    "WCF",
+    "Automation testing using C# Specflow",
+    "JIRA",
+    "Bamboo",
+    "Bitbucket",
+    "Test Driven Development (TDD)",
+    "Unit testing",
+    "Agile development methodology",
+    "Design thinking and technical problem solving",
+    "Able to guide and mentor project team",
+    "Strong in design patterns and practices",
+    "Able to use architecting tools like EA",
+    "Behavior-driven development (BDD)",
+    "Team player",
+    "Scrum model experience at Onshore",
+    "Ability to communicate clearly in oral and written form",
+    "Risk identification and mitigation planning",
+    "Prioritization and time management",
+    "Offshore development team collaboration experience",
+    "Prior customer-facing role experience",
+    "4-7 years hands-on experience in C#, ASP .Net, .Net Core",
+    "2-3 years strong experience in Web APIs and Microservices",
+    "2 years experience in SQL Server",
+    "4-7 years hands-on experience developing Web applications/Web APIs using C#, .Net Core, WebAPI, WebServices, WCF"
+  ],
+  "preferred_skills": [
+    "BDD tool C# Spec Flow",
+    "TDD tool MS Test",
+    "Micro UI and Micro Services",
+    "Cloud computing (AWS, Azure, Pivotal)"
+  ],
+  "seniority_signals": [
+    "mid-level to senior",
+    "4-7 years experience required",
+    "Guide and mentor the project team",
+    "Customer-facing and stakeholder communication"
+  ]
+}

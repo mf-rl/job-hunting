@@ -1,0 +1,116 @@
+Mauricio Ramirez L.
+Back-End Software Engineer | Backend Systems | REST API Design | Microservices | DevOps Practices
+| CI/CD | Containerization | Cloud Platforms | AI-Assisted Development/Code Review | AI Coding Agents
++51 949 807 125 - mf.ramirezl@gmail.com - linkedin.com/in/mauricioramirezrl
+
+
+PROFESSIONAL SUMMARY
+Back-End Software Engineer with 10+ years of experience building and scaling distributed systems in finance and
+retail. Specialized in .NET, microservices, and cloud architectures, with a proven track record of improving
+performance, reliability, and deployment efficiency in remote, cross-functional teams. Experienced in leveraging AI
+coding agents to accelerate development, streamline debugging, and strengthen code review practices.
+
+PROFESSIONAL EXPERIENCE
+Bonzzu Inc. — Remote
+Senior Software Engineer (Back-End) | Sep 2021 – Present
+Key Responsibilities:
+-
+  Designed and developed 10+ scalable microservices using .NET Framework/Core, supporting inventory forecasting
+  systems processing millions of records daily.
+-
+  Built and optimized RESTful APIs, reducing average response time by 25–35% through improved error handling,
+  caching, and versioning strategies.
+-
+  Implemented CI/CD pipelines (Jenkins, GitHub Actions), decreasing deployment time by 40% and enabling multiple
+  weekly releases.
+-
+  Enforced code quality practices (SonarQube, unit testing), reducing production defects by 30% and improving
+  maintainability.
+-
+  Integrated AI coding agents (Claude, GitHub Copilot, OpenAI Codex) into daily development workflows, reducing
+  turnaround time on standard tasks by up to 75% (cutting typical 2–3 day tasks to half a day to 1 day) and accelerating
+  new API scaffolding from multiple days to 1–2 days, while driving broader team adoption of AI-assisted development
+  practices.
+-
+  Applied AI agents to support debugging, root-cause analysis, and code review — speeding up diagnosis of intermittent
+  production issues and flagging edge cases, null-reference risks, and inconsistent error handling before pull requests
+  reached human reviewers, improving code quality and review turnaround.
+Key Achievements:
+-
+  Standardized CI/CD workflows across services, increasing deployment success rate to >95%.
+-
+  Contributed to high-volume backend systems supporting a global retail client, enabling scalable inventory processing
+  and decision-making.
+-
+  Reduced time-to-resolution on recurring backend issues by pairing traditional debugging with AI-agent-assisted
+  root-cause analysis.
+
+Sigcomt S.A.C. — Lima, Peru
+Back-End Software Engineer | Apr 2019 – Jun 2021
+Key Responsibilities:
+-
+  Developed microservices in .NET and Java for financial transaction systems handling high-volume digital credit
+  operations.
+-
+  Implemented asynchronous processing and integrations (JBoss Fuse), improving system throughput by 30% and
+  reducing latency in transaction flows.
+-
+  Centralized business rules using JBoss BRMS, reducing manual intervention and accelerating credit approval processes
+  by 20–25%.
+-
+  Participated in system design, improving system resilience and reducing service downtime through fault-tolerant
+  patterns.
+Key Achievements:
+-
+  Delivered backend services powering digital credit and mobile wallet platforms used in production.
+-
+  Eliminated operational bottlenecks by automating decision logic, improving processing efficiency and consistency.
+
+Gestión y Sistemas S.A.C. — Lima, Peru
+Software Engineer | May 2018 – Apr 2019
+-
+  Developed backend APIs and web applications using .NET Core and SQL Server, supporting business operations with
+  improved data accessibility and performance.
+-
+  Optimized SQL queries and stored procedures, reducing reporting execution time by 30–40%.
+-
+  Built Power BI dashboards that enabled stakeholders to make faster, data-driven decisions, reducing reporting
+  turnaround time from days to hours.
+
+Universidad César Vallejo — Trujillo, Peru
+Software Engineer | Mar 2016 – Apr 2018
+-
+  Maintained and enhanced HR and finance systems, improving system reliability and reducing support incidents by 20%.
+-
+  Developed reporting tools that streamlined administrative workflows, saving dozens of manual hours per month.
+-
+  Collaborated with stakeholders to implement system improvements aligned with operational needs.
+
+EARLIER EXPERIENCE
+Delivered multiple enterprise and financial system solutions across the following roles:
+Indra — Software Engineer (2015 – 2016)
+Inexxo S.A.C. — Software Engineer (2013 – 2015)
+Caja Municipal de Ica — IT Assistant (2012 – 2013)
+COM S.A. — Programmer Analyst (2009 – 2011)
+Cisesa Comunicaciones — Analyst Developer (2006 – 2008)
+
+EDUCATION
+B.S. in Systems Engineering — Universidad César Vallejo, Peru (2003)
+
+TECHNICAL SKILLS
+Programming Languages: C#, Java, SQL, Python, JavaScript
+Backend Frameworks & APIs: .NET Framework, .NET Core, ASP.NET Web API, RESTful API, Swagger/OpenAPI
+Architecture & Systems Design: Microservices, Distributed Systems, Service Integration, Asynchronous Processing
+Databases & Data Stores: SQL Server, MySQL, MongoDB, SQLite
+Cloud & DevOps: Docker, Kubernetes, CI/CD Pipelines (Jenkins, GitHub Actions, ArgoCD), Azure, AWS
+Observability & Reliability: Centralized Logging, Application Monitoring, Performance Metrics
+Quality & Testing: Unit Testing, Code Reviews, Static Code Analysis (SonarQube)
+AI-Assisted Development: Code review, Code generation, AI Coding Agents, Claude, GitHub Copilot, OpenAI Codex
+Version Control & Collaboration: Git, GitHub, Jira, Confluence
+Frontend (Supporting): Angular, TypeScript, JavaScript
+
+ADDITIONAL INFORMATION
+Languages: English (Intermediate – professional working proficiency)
+Methodologies: Agile / Scrum
+Availability: Full-time remote
+

@@ -1,0 +1,8 @@
+{
+  "target_titles": ["Senior Backend Engineer", "Senior Platform Engineer", "Staff Software Engineer"],
+  "search_queries": ["Kubernetes", "Backend", "Distributed Systems", "Go", "Data Pipeline"],
+  "skills": ["Python", "Go", "Java", "TypeScript", "Kubernetes", "Docker", "AWS", "GCP", "Kafka", "Flink", "PostgreSQL", "Redis", "Elasticsearch", "Terraform", "Prometheus", "Grafana", "FastAPI", "GitHub Actions"],
+  "scoring_skills": ["Kubernetes", "Python", "Go", "Distributed Systems", "AWS"],
+  "seniority": "Senior",
+  "industry_hints": ["Cloud Infrastructure", "Fintech", "Data Engineering"]
+}

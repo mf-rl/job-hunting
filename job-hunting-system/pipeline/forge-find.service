@@ -1,0 +1,12 @@
+[Unit]
+Description=Forge scheduled find scan + digest
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=mfrl
+WorkingDirectory=/home/mfrl/job-hunting/job-hunting-system
+Environment=HERMES_HOME=/home/mfrl/.hermes
+Environment=FORGE_SYSTEM_DIR=/home/mfrl/job-hunting/job-hunting-system
+ExecStart=/home/mfrl/.hermes/hermes-agent/venv/bin/python3 /home/mfrl/job-hunting/job-hunting-system/pipeline/scheduled_find.py

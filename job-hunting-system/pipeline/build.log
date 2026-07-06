@@ -1,0 +1,72 @@
+[2026-07-02T09:22:19.970224] Extracted 5112 chars from base_cv_raw.pdf
+[2026-07-02T09:22:19.970615] base_cv.txt written
+[2026-07-02T09:23:16.685605] base_cv.json written: Mauricio Ramírez L. (9 jobs, 9 skill groups)
+[2026-07-02T09:23:37.700387] Profile derived: 3 titles, 5 queries
+[2026-07-02T09:23:37.700622] Build complete
+[2026-07-04T21:42:32.281026] Extracted 5794 chars from base_cv_raw.pdf
+[2026-07-04T21:42:32.283900] base_cv.txt written
+[2026-07-04T21:42:47.057790] FAIL: CV Adapter returned no valid structured data
+[2026-07-04T21:42:57.965485] Profile derivation returned no data (best-effort — CV build unaffected)
+[2026-07-04T21:42:57.965901] Build complete
+[2026-07-04T21:45:32.507462] Extracted 5794 chars from base_cv_raw.pdf
+[2026-07-04T21:45:32.510324] base_cv.txt written
+[2026-07-04T21:45:44.998788] FAIL: CV Adapter returned no valid structured data
+[2026-07-04T21:45:53.074170] Profile derivation returned no data (best-effort — CV build unaffected)
+[2026-07-04T21:45:53.074640] Build complete
+[2026-07-04T21:50:42.169696] Extracted 5789 chars from base_cv_raw.pdf
+[2026-07-04T21:50:42.172097] base_cv.txt written
+[2026-07-04T21:50:52.550100] FAIL: CV Adapter returned no valid structured data
+[2026-07-04T21:51:00.414868] Profile derivation returned no data (best-effort — CV build unaffected)
+[2026-07-04T21:51:00.415220] Build complete
+[2026-07-04T21:57:09.688202] Extracted 5789 chars from base_cv_raw.pdf
+[2026-07-04T21:57:09.691176] base_cv.txt written
+[2026-07-04T21:57:23.758761] FAIL: CV Adapter returned no valid structured data
+[2026-07-04T21:57:31.631670] Profile derivation returned no data (best-effort — CV build unaffected)
+[2026-07-04T21:57:31.632081] Build complete
+[2026-07-04T22:05:52.232467] Extracted 5789 chars from base_cv_raw.pdf
+[2026-07-04T22:05:52.234100] base_cv.txt written
+[2026-07-04T22:07:06.076642] base_cv.json written: Mauricio Ramirez L. (9 jobs, 2 skill groups)
+[2026-07-04T22:07:39.712858] Profile derived: 3 titles, 3 queries
+[2026-07-04T22:07:39.712987] Build complete
+[2026-07-04T22:08:07.567800] Extracted 5789 chars from base_cv_raw.pdf
+[2026-07-04T22:08:07.570086] base_cv.txt written
+[2026-07-04T22:09:13.761650] base_cv.json written: Mauricio Ramirez L. (4 jobs, 2 skill groups)
+[2026-07-04T22:09:51.120121] Profile derived: 3 titles, 3 queries
+[2026-07-04T22:09:51.120314] Build complete
+[2026-07-04T22:14:35.349083] Extracted 5750 chars from base_cv_raw.pdf
+[2026-07-04T22:14:35.351598] base_cv.txt written
+[2026-07-04T22:16:40.663579] FAIL: CV Adapter returned no valid structured data
+[2026-07-04T22:18:14.572048] Profile derivation returned no data (best-effort — CV build unaffected)
+[2026-07-04T22:18:14.572886] Build complete
+[2026-07-04T22:22:54.813337] Extracted 5750 chars from base_cv_raw.pdf
+[2026-07-04T22:22:54.813778] base_cv.txt written
+[2026-07-04T22:24:44.514843] base_cv.json written: Mauricio Ramirez L. (9 jobs, 2 skill groups)
+[2026-07-04T22:26:05.004032] Profile derived: 3 titles, 3 queries
+[2026-07-04T22:26:05.004790] Build complete
+[2026-07-04T22:27:40.382432] Extracted 5750 chars from base_cv_raw.pdf
+[2026-07-04T22:27:40.383595] base_cv.txt written
+[2026-07-04T22:28:51.080314] base_cv.json written: Mauricio Ramirez L. (4 jobs, 10 skill groups)
+[2026-07-04T22:31:16.920120] Profile derived: 3 titles, 3 queries
+[2026-07-04T22:31:16.920645] Build complete
+[2026-07-04T22:45:45.391408] Extracted 5750 chars from base_cv_raw.pdf
+[2026-07-04T22:45:45.391909] base_cv.txt written
+[2026-07-04T22:48:24.787999] base_cv.json written: Mauricio Ramirez L. (4 jobs, 10 skill groups)
+[2026-07-04T22:50:39.535179] Profile derived: 5 titles, 3 queries, 42 scoring skills from CV
+[2026-07-04T22:50:39.536146] Build complete
+[2026-07-04T23:02:06.968277] Extracted 5750 chars from base_cv_raw.pdf
+[2026-07-04T23:02:06.968679] base_cv.txt written
+[2026-07-04T23:06:37.038105] Extracted 5750 chars from base_cv_raw.pdf
+[2026-07-04T23:06:37.039489] base_cv.txt written
+[2026-07-04T23:09:54.688739] FAIL: CV Adapter returned no valid structured data
+[2026-07-04T23:14:06.828332] Profile derivation returned no data (best-effort — CV build unaffected)
+[2026-07-04T23:14:06.829669] Build complete
+[2026-07-04T23:16:23.370281] Extracted 5750 chars from base_cv_raw.pdf
+[2026-07-04T23:16:23.373224] base_cv.txt written
+[2026-07-04T23:17:29.992805] base_cv.json written: Mauricio Ramirez L. (9 jobs, 10 skill groups)
+[2026-07-04T23:18:13.779208] Profile derived: 3 titles, 3 queries, 42 scoring skills from CV
+[2026-07-04T23:18:13.779364] Build complete
+[2026-07-04T23:22:45.691627] Extracted 5750 chars from base_cv_raw.pdf
+[2026-07-04T23:22:45.693505] base_cv.txt written
+[2026-07-04T23:23:53.754875] base_cv.json written: Mauricio Ramirez L. (9 jobs, 10 skill groups)
+[2026-07-04T23:24:31.144243] Profile derived: 3 titles, 3 queries, 42 scoring skills from CV
+[2026-07-04T23:24:31.146033] Build complete

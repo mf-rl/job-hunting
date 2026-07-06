@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FORGE — Design Reference</title>
+<style id="fx-fix">
+  :root {
+    --bg: #080C17;
+    --bg-panel: #121724;
+    --surface: #0B1120;
+    --border: #272C3C;
+    --border-light: rgba(255,255,255,0.07);
+    --text: #F3F5FB;
+    --text-secondary: #B4B7C1;
+    --text-faint: #70747F;
+    --gold: #EAC266;
+    --gold-glow: rgba(234,194,102,0.25);
+    --teal: #00C89C;
+    --coral: #FF7C68;
+    --iris: #AD8CFF;
+    --sky: #6EB8FF;
+    --card-radius: 16px;
+    --card-padding: 24px;
+    --blur: blur(20px);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    top: -300px; left: -200px;
+    width: 800px; height: 800px;
+    background: radial-gradient(circle, rgba(234,194,102,0.08) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  body::after {
+    content: '';
+    position: fixed;
+    bottom: -200px; right: -200px;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(110,184,255,0.06) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .wrapper { padding: 48px; max-width: 1200px; margin:0 auto; position:relative; z-index:1; }
+  h1 { font-size: 34px; font-weight: 800; letter-spacing: -1px; background: linear-gradient(135deg,#fff 40%,var(--gold)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom: 48px; }
+  .eyebrow { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; color: var(--gold); margin-bottom: 8px; display: flex; align-items: center; gap: 10px; }
+  .eyebrow::before { content: ''; display: inline-block; width: 24px; height: 2px; background: var(--gold); border-radius: 2px; box-shadow: 0 0 6px var(--gold-glow); }
+  .grid { display: grid; gap: 24px; margin-bottom: 48px; }
+  .grid-4 { grid-template-columns: repeat(4,1fr); }
+  .grid-3 { grid-template-columns: repeat(3,1fr); }
+  .grid-2 { grid-template-columns: repeat(2,1fr); }
+  .card {
+    background: rgba(18,23,36,0.75);
+    backdrop-filter: var(--blur);
+    -webkit-backdrop-filter: var(--blur);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: var(--card-radius);
+    padding: var(--card-padding);
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .card:hover { border-color: rgba(255,255,255,0.14); }
+  .card-accent::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--gold), transparent 80%);
+  }
+  .card-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-faint); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+  .card-label::before { content: '◆'; color: var(--gold); font-size: 8px; }
+  .stat-number { font-size: 42px; font-weight: 900; letter-spacing: -2px; background: linear-gradient(135deg,#fff 30%,var(--gold)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; line-height: 1; margin-bottom: 4px; }
+  .stat-sub { font-size: 13px; color: var(--text-secondary); }
+  .gauge-ring { width: 120px; height: 120px; margin: 0 auto 12px; position: relative; }
+  .gauge-ring svg { transform: rotate(-90deg); }
+  .gauge-value { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: 800; letter-spacing: -1px; }
+  .badge { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 999px; font-size: 12px; font-weight: 500; }
+  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 24px; border-radius: 10px; font-weight: 700; font-size: 14px; cursor: pointer; border: none; transition: all 0.2s; }
+  .btn-primary { background: linear-gradient(135deg, var(--gold), #D4A84A); color: #0B1120; box-shadow: 0 4px 20px var(--gold-glow); }
+  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 28px var(--gold-glow); }
+  .btn-ghost { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: var(--text); }
+  .btn-ghost:hover { background: rgba(255,255,255,0.1); }
+  .container-sample { padding: 24px; border: 1px dashed var(--border); border-radius: var(--card-radius); background: rgba(0,0,0,0.2); margin-bottom: 24px; }
+  .color-swatch { display: flex; gap: 12px; flex-wrap: wrap; }
+  .swatch { width: 48px; height: 48px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); }
+  .table-sample { width:100%; border-collapse:collapse; }
+  .table-sample th { text-align:left; padding:10px 0; color:var(--text-faint); font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:1px; border-bottom:1px solid var(--border); }
+  .table-sample td { padding:10px 0; border-bottom:1px solid var(--border); font-size:13px; }
+  .score-high { color: var(--teal); font-weight:700; }
+  .score-mid { color: var(--gold); font-weight:700; }
+  @media (max-width:767px) {
+    .grid-4, .grid-3, .grid-2 { grid-template-columns: 1fr; }
+    .wrapper { padding: 24px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrapper">
+  <div class="eyebrow">Design System</div>
+  <h1>FORGE · Mission Control</h1>
+
+  <div class="grid grid-4">
+    <div class="card card-accent">
+      <div class="card-label">Total Actions</div>
+      <div class="stat-number" data-gauge-value="actions" id="gauge-tokens">128</div>
+      <div class="stat-sub">+12 this week</div>
+    </div>
+    <div class="card card-accent">
+      <div class="card-label">Jobs Found</div>
+      <div class="stat-number" data-gauge-value="jobs" id="gauge-jobs">47</div>
+      <div class="stat-sub">3 new today</div>
+    </div>
+    <div class="card card-accent">
+      <div class="card-label">Matches</div>
+      <div class="stat-number" data-gauge-value="matches" id="gauge-matches">18</div>
+      <div class="stat-sub">80%+ score</div>
+    </div>
+    <div class="card card-accent">
+      <div class="card-label">Promoted</div>
+      <div class="stat-number" data-gauge-value="promoted" id="gauge-promoted">4</div>
+      <div class="stat-sub">CVs tailored</div>
+    </div>
+  </div>
+
+  <div class="grid grid-3">
+    <div class="card"><div class="card-label">Scout</div><div class="stat-number" data-agent="scout">2</div><div class="stat-sub">actions · last 1m ago</div></div>
+    <div class="card"><div class="card-label">Job Reader</div><div class="stat-number" data-agent="job-reader">2</div><div class="stat-sub">actions · last 2m ago</div></div>
+    <div class="card"><div class="card-label">CV Adapter</div><div class="stat-number" data-agent="cv-adapter">2</div><div class="stat-sub">actions · last 3m ago</div></div>
+  </div>
+
+  <div class="grid grid-3">
+    <div class="card" style="grid-column: span 2;">
+      <div class="card-label">Conversion Funnel</div>
+      <div style="display:flex;gap:24px;align-items:flex-end;height:120px;padding-top:20px;">
+        <div style="flex:1;text-align:center;"><div style="height:60px;width:100%;background:linear-gradient(to top,rgba(234,194,102,0.4),transparent);border-radius:6px 6px 0 0;" data-funnel="found"></div><div style="font-size:11px;color:var(--text-faint);margin-top:6px;">Found<br><span style="font-weight:700;color:var(--text);" data-funnel="found-value">120</span></div></div>
+        <div style="flex:1;text-align:center;"><div style="height:45px;width:100%;background:linear-gradient(to top,rgba(0,200,156,0.4),transparent);border-radius:6px 6px 0 0;" data-funnel="matched"></div><div style="font-size:11px;color:var(--text-faint);margin-top:6px;">Matched<br><span style="font-weight:700;color:var(--text);" data-funnel="matched-value">47</span></div></div>
+        <div style="flex:1;text-align:center;"><div style="height:30px;width:100%;background:linear-gradient(to top,rgba(110,184,255,0.4),transparent);border-radius:6px 6px 0 0;" data-funnel="read"></div><div style="font-size:11px;color:var(--text-faint);margin-top:6px;">Read<br><span style="font-weight:700;color:var(--text);" data-funnel="read-value">18</span></div></div>
+        <div style="flex:1;text-align:center;"><div style="height:18px;width:100%;background:linear-gradient(to top,rgba(255,124,104,0.4),transparent);border-radius:6px 6px 0 0;" data-funnel="cvs"></div><div style="font-size:11px;color:var(--text-faint);margin-top:6px;">CVs Done<br><span style="font-weight:700;color:var(--text);" data-funnel="cvs-value">4</span></div></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-label">Status</div>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-top:8px;">
+        <div style="display:flex;justify-content:space-between;font-size:13px;"><span style="color:var(--text-faint);">Model</span><span id="chip-model" style="color:var(--gold);font-weight:600;">deepseek</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:13px;"><span style="color:var(--text-faint);">Gateway</span><span><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--teal);margin-right:4px;"></span>Running</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:13px;"><span style="color:var(--text-faint);">Slack</span><span><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--teal);margin-right:4px;"></span>Connected</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:13px;"><span style="color:var(--text-faint);">Clock</span><span id="clock-display" style="font-weight:600;" data-clock>--:--:--</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-label">Colour Palette</div>
+    <div class="color-swatch">
+      <div><div class="swatch" style="background:#EAC266;"></div><span style="font-size:10px;color:var(--text-faint);">Gold</span></div>
+      <div><div class="swatch" style="background:#00C89C;"></div><span style="font-size:10px;color:var(--text-faint);">Teal</span></div>
+      <div><div class="swatch" style="background:#6EB8FF;"></div><span style="font-size:10px;color:var(--text-faint);">Sky</span></div>
+      <div><div class="swatch" style="background:#FF7C68;"></div><span style="font-size:10px;color:var(--text-faint);">Coral</span></div>
+      <div><div class="swatch" style="background:#AD8CFF;"></div><span style="font-size:10px;color:var(--text-faint);">Iris</span></div>
+      <div><div class="swatch" style="background:#121724;"></div><span style="font-size:10px;color:var(--text-faint);">Panel</span></div>
+    </div>
+  </div>
+</div>
+<script>let c=document.getElementById('clock-display');setInterval(()=>{c.textContent=new Date().toLocaleTimeString()},1000);</script>
+</body>
+</html>

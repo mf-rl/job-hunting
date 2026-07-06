@@ -1,0 +1,11 @@
+[Unit]
+Description=Forge daily morning find scan (09:00)
+After=forge-find.service
+
+[Timer]
+OnCalendar=*-*-* 09:00:00
+Persistent=true
+RandomizedDelaySec=300
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,30 @@
+{
+  "full_job_title": ".Net Developer",
+  "company_name": "Acro Service Corp.",
+  "location": "Carson Meadows, NV 89702",
+  "remote_mentioned": false,
+  "language": "English",
+  "responsibilities": [
+    "Modernize legacy VB.NET / .NET Framework applications to C# and .NET 8+",
+    "Design, develop, and maintain secure web applications using C#/.NET, Razor Pages, Entity Framework, and Microsoft SQL Server",
+    "Deploy, configure, and troubleshoot applications hosted on IIS in on-premises Windows Server environments",
+    "Implement and maintain CI/CD pipelines, version control, and work tracking using Azure DevOps",
+    "Ensure solutions meet agency requirements for security, scalability, reliability, auditability, and compliance",
+    "Collaborate with stakeholders to understand requirements and deliver solutions aligned with agency needs"
+  ],
+  "required_skills": [
+    ".NET 8+ and C# development",
+    "Azure DevOps for CI/CD, version control, and work tracking",
+    "Strong analytical and communication skills",
+    "Demonstrated experience developing and maintaining secure custom web applications using C#/.NET, Razor Pages, Entity Framework, and Microsoft SQL Server",
+    "Experience deploying, configuring, and troubleshooting applications hosted on IIS in on-premises Windows Server environments",
+    "Strong working knowledge of relational database design, stored procedures, migrations, data classification/governance, audit trail, and secure handling of sensitive application data",
+    "Ability to work on public-facing and internal enterprise applications where security, reliability, auditability, regulatory/statutory compliance, and operational stability are critical",
+    "Familiarity with authentication, authorization, role-based access control, secure configuration management, logging, and error handling for production web applications",
+    "Experience working within restricted or high-security enterprise environments where arbitrary third-party dependencies, public APIs, SaaS platforms, or common cloud services may not be approved or available",
+    "Operational risk management, ability to understand and safely modify existing codebases, including legacy systems, without introducing unnecessary architectural complexity or risk",
+    "Strong documentation, communication, and source control practices, with the ability to thoughtfully coordinate changes across development, test, and production environments"
+  ],
+  "preferred_skills": [],
+  "seniority_signals": []
+}

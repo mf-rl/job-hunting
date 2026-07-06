@@ -1,0 +1,216 @@
+{
+  "name": "Mauricio Ramírez L.",
+  "headline": ".NET Software Engineer | C# / .NET Core Development | CI/CD Pipelines | SQL Server | Web Application Modernization",
+  "contact": {
+    "email": "mf.ramirezl@gmail.com",
+    "phone": "+51 949 807 125",
+    "location": "",
+    "linkedin": "linkedin.com/in/mauricioramirezrl"
+  },
+  "summary": "Back-End Software Engineer with 10+ years of experience designing, developing, and maintaining .NET applications for finance and retail. Proven track record building secure web applications and RESTful APIs with C#/.NET Core and SQL Server, implementing CI/CD pipelines with GitHub Actions and Jenkins, and improving system reliability, scalability, and deployment efficiency in production environments.",
+  "competencies": [
+    "Back-End Software Engineering",
+    "Backend Systems",
+    "REST API Design",
+    "Microservices",
+    "DevOps Practices",
+    "CI/CD Pipelines",
+    "Containerization",
+    "Cloud Platforms",
+    "Distributed Systems",
+    ".NET"
+  ],
+  "experience": [
+    {
+      "company": "Bonzzu Inc.",
+      "location": "Remote",
+      "start": "2021-09",
+      "end": "Present",
+      "role": "Senior Software Engineer (Back-End)",
+      "bullets": [
+        "Designed and developed 10+ scalable microservices using .NET Framework and .NET Core, supporting inventory forecasting systems processing millions of records daily for global retail operations.",
+        "Built and optimized secure RESTful APIs in C#/.NET, reducing average response time by 25–35% through improved error handling, caching, and versioning strategies.",
+        "Implemented CI/CD pipelines using GitHub Actions and Jenkins, decreasing deployment time by 40% and enabling multiple weekly releases with a >95% deployment success rate.",
+        "Enforced code quality practices including unit testing and SonarQube static code analysis, reducing production defects by 30% and improving overall application maintainability.",
+        "Partnered with product and planning teams to deliver backend solutions that improved forecast accuracy and reduced stock discrepancies across global operations.",
+        "Contributed to high-volume backend systems processing scalable inventory data and enabling real-time decision-making for an enterprise environment."
+      ]
+    },
+    {
+      "company": "Sigcomt S.A.C.",
+      "location": "Lima, Peru",
+      "start": "2019-04",
+      "end": "2021-06",
+      "role": "Back-End Software Engineer",
+      "bullets": [
+        "Developed microservices in .NET and Java for financial transaction systems handling high-volume digital credit operations with strict security and reliability requirements.",
+        "Implemented asynchronous processing and system integrations, improving system throughput by 30% and reducing latency in transaction flows.",
+        "Centralized business rules and automated decision logic, reducing manual intervention and accelerating credit approval processes by 20–25%.",
+        "Participated in system design using fault-tolerant patterns, improving system resilience and reducing service downtime.",
+        "Delivered backend services powering production digital credit and mobile wallet platforms where operational stability and auditability were critical.",
+        "Eliminated operational bottlenecks by automating processing logic, improving efficiency and consistency across transaction workflows."
+      ]
+    },
+    {
+      "company": "Gestión y Sistemas S.A.C.",
+      "location": "Lima, Peru",
+      "start": "2018-05",
+      "end": "2019-04",
+      "role": "Software Engineer",
+      "bullets": [
+        "Developed backend APIs and web applications using .NET Core and SQL Server, supporting business operations with improved data accessibility and system performance.",
+        "Optimized SQL queries and stored procedures, reducing reporting execution time by 30–40% and enhancing data retrieval efficiency.",
+        "Built reporting dashboards that enabled stakeholders to make faster, data-driven decisions, reducing reporting turnaround time from days to hours."
+      ]
+    },
+    {
+      "company": "Universidad César Vallejo",
+      "location": "Trujillo, Peru",
+      "start": "2016-03",
+      "end": "2018-04",
+      "role": "Software Engineer",
+      "bullets": [
+        "Maintained and enhanced internal HR and finance systems, improving system reliability and reducing support incidents by 20%.",
+        "Developed reporting tools that streamlined administrative workflows, saving dozens of manual hours per month.",
+        "Collaborated with stakeholders to implement system improvements aligned with operational needs."
+      ]
+    },
+    {
+      "company": "Indra",
+      "location": "",
+      "start": "2015",
+      "end": "2016",
+      "role": "Software Engineer",
+      "bullets": []
+    },
+    {
+      "company": "Inexxo S.A.C.",
+      "location": "",
+      "start": "2013",
+      "end": "2015",
+      "role": "Software Engineer",
+      "bullets": []
+    },
+    {
+      "company": "Caja Municipal de Ica",
+      "location": "",
+      "start": "2012",
+      "end": "2013",
+      "role": "IT Assistant",
+      "bullets": []
+    },
+    {
+      "company": "COM S.A.",
+      "location": "",
+      "start": "2009",
+      "end": "2011",
+      "role": "Programmer Analyst",
+      "bullets": []
+    },
+    {
+      "company": "Cisesa Comunicaciones",
+      "location": "",
+      "start": "2006",
+      "end": "2008",
+      "role": "Analyst Developer",
+      "bullets": []
+    }
+  ],
+  "education": [
+    {
+      "institution": "Universidad César Vallejo",
+      "degree": "B.S.",
+      "field": "Systems Engineering",
+      "year": "2003"
+    }
+  ],
+  "skills": [
+    {
+      "category": "Programming Languages",
+      "items": [
+        "C#",
+        "Java",
+        "SQL",
+        "Python",
+        "JavaScript"
+      ]
+    },
+    {
+      "category": "Backend Frameworks & APIs",
+      "items": [
+        ".NET Framework",
+        ".NET Core",
+        "ASP.NET Web API",
+        "RESTful API",
+        "Swagger/OpenAPI"
+      ]
+    },
+    {
+      "category": "Architecture & Systems Design",
+      "items": [
+        "Microservices",
+        "Distributed Systems",
+        "Service Integration",
+        "Asynchronous Processing"
+      ]
+    },
+    {
+      "category": "Databases & Data Stores",
+      "items": [
+        "SQL Server",
+        "MySQL",
+        "MongoDB",
+        "SQLite"
+      ]
+    },
+    {
+      "category": "Cloud & DevOps",
+      "items": [
+        "Docker",
+        "Kubernetes",
+        "CI/CD Pipelines (Jenkins, GitHub Actions, ArgoCD)",
+        "Azure",
+        "AWS"
+      ]
+    },
+    {
+      "category": "Observability & Reliability",
+      "items": [
+        "Centralized Logging",
+        "Application Monitoring",
+        "Performance Metrics"
+      ]
+    },
+    {
+      "category": "Quality & Testing",
+      "items": [
+        "Unit Testing",
+        "Code Reviews",
+        "Static Code Analysis (SonarQube)"
+      ]
+    },
+    {
+      "category": "Version Control & Collaboration",
+      "items": [
+        "Git",
+        "GitHub",
+        "Jira",
+        "Confluence"
+      ]
+    },
+    {
+      "category": "Frontend (Supporting)",
+      "items": [
+        "Angular",
+        "TypeScript",
+        "JavaScript"
+      ]
+    }
+  ],
+  "languages": [
+    {
+      "lang": "English",
+      "level": "Intermediate"
+    }
+  ]
+}

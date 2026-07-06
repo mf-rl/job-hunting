@@ -1,0 +1,227 @@
+{
+  "name": "Mauricio Ramírez L.",
+  "headline": "Backend Software Engineer | Java & Spring Services | REST API Design | Cloud Platforms (AWS, Azure) | CI/CD Pipelines | Containerization | Distributed Systems",
+  "contact": {
+    "email": "mf.ramirezl@gmail.com",
+    "phone": "+51 949 807 125",
+    "location": "",
+    "linkedin": "linkedin.com/in/mauricioramirezrl"
+  },
+  "summary": "Backend Software Engineer with 10+ years of experience building and scaling distributed services, targeting the Backend Software Engineer role at Planet. Proven track record of developing microservices in Java and .NET, designing RESTful APIs, and deploying cloud-native solutions using Docker, Kubernetes, and CI/CD pipelines (Jenkins, GitHub Actions, ArgoCD). Experienced with high-throughput transaction processing, asynchronous workflows, and cloud platforms (AWS, Azure), with a strong focus on service reliability, observability, and clean API design. Background includes delivering backend platforms for global retail and financial systems — environments demanding the rigor, scale, and operational discipline that satellite data platforms require.",
+  "competencies": [
+    "Back-End Software Engineering",
+    "Backend Systems",
+    "REST API Design",
+    "Microservices",
+    "DevOps Practices",
+    "CI/CD Pipelines",
+    "Containerization",
+    "Cloud Platforms",
+    "Distributed Systems",
+    ".NET"
+  ],
+  "experience": [
+    {
+      "company": "Bonzzu Inc.",
+      "location": "Remote",
+      "start": "2021-09",
+      "end": "Present",
+      "role": "Senior Software Engineer (Back-End)",
+      "bullets": [
+        "Architected and developed 10+ distributed microservices using .NET Core and C#, processing millions of records daily within a cloud-based inventory forecasting platform supporting global retail operations.",
+        "Designed and optimized RESTful APIs with caching, versioning, and error-handling strategies, achieving a 25–35% reduction in average response times across high-throughput backend services.",
+        "Built and maintained CI/CD pipelines using Jenkins and GitHub Actions, cutting deployment time by 40% and enabling frequent, reliable releases to cloud environments.",
+        "Enforced code quality through comprehensive unit testing and static analysis (SonarQube), reducing production defects by 30% and improving overall service maintainability.",
+        "Standardized CI/CD workflows across the entire microservice architecture, increasing deployment success rate to over 95% and minimizing release-related incidents.",
+        "Partnered with cross-functional product and planning teams to deliver backend solutions that improved forecast accuracy and reduced stock discrepancies across global retail operations.",
+        "Contributed to high-volume backend systems enabling scalable inventory processing and near-real-time decision-making for a global retail client."
+      ]
+    },
+    {
+      "company": "Sigcomt S.A.C.",
+      "location": "Lima, Peru",
+      "start": "2019-04",
+      "end": "2021-06",
+      "role": "Back-End Software Engineer",
+      "bullets": [
+        "Developed microservices in Java and .NET for financial transaction systems handling high-volume digital credit operations, demonstrating versatility across JVM and .NET ecosystems.",
+        "Implemented asynchronous processing pipelines and service integrations using JBoss Fuse, improving system throughput by 30% and reducing latency in transaction flows.",
+        "Centralized business rules using JBoss BRMS, automating decision logic and accelerating credit approval processes by 20–25% while reducing manual intervention.",
+        "Applied fault-tolerant design patterns to improve system resilience and reduce service downtime across the production platform.",
+        "Delivered backend services powering digital credit and mobile wallet platforms used in production, processing high-concurrency financial transactions.",
+        "Participated in system design and code reviews, contributing to maintainable, well-documented service architectures."
+      ]
+    },
+    {
+      "company": "Gestión y Sistemas S.A.C.",
+      "location": "Lima, Peru",
+      "start": "2018-05",
+      "end": "2019-04",
+      "role": "Software Engineer",
+      "bullets": [
+        "Developed backend APIs and web applications using .NET Core and SQL Server, improving data accessibility and performance for business operations.",
+        "Optimized SQL queries and stored procedures, reducing reporting execution time by 30–40% and enhancing overall data pipeline efficiency.",
+        "Built data visualization dashboards (Power BI) that enabled stakeholders to make faster, data-driven decisions, reducing reporting turnaround from days to hours."
+      ]
+    },
+    {
+      "company": "Universidad César Vallejo",
+      "location": "Trujillo, Peru",
+      "start": "2016-03",
+      "end": "2018-04",
+      "role": "Software Engineer",
+      "bullets": [
+        "Maintained and enhanced HR and finance systems using .NET and SQL Server, improving system reliability and reducing support incidents by 20%.",
+        "Developed automated reporting tools that streamlined administrative workflows, saving dozens of manual hours per month.",
+        "Collaborated with stakeholders to design and implement system improvements aligned with operational requirements."
+      ]
+    },
+    {
+      "company": "Indra",
+      "location": "",
+      "start": "2015",
+      "end": "2016",
+      "role": "Software Engineer",
+      "bullets": [
+        "Contributed to enterprise backend software engineering projects within a global IT consultancy, applying software design and development best practices."
+      ]
+    },
+    {
+      "company": "Inexxo S.A.C.",
+      "location": "",
+      "start": "2013",
+      "end": "2015",
+      "role": "Software Engineer",
+      "bullets": [
+        "Developed and maintained backend applications and data services, applying core programming and database skills to client-facing projects."
+      ]
+    },
+    {
+      "company": "Caja Municipal de Ica",
+      "location": "",
+      "start": "2012",
+      "end": "2013",
+      "role": "IT Assistant",
+      "bullets": [
+        "Supported IT operations and backend systems maintenance within a financial institution, gaining hands-on experience with production database environments."
+      ]
+    },
+    {
+      "company": "COM S.A.",
+      "location": "",
+      "start": "2009",
+      "end": "2011",
+      "role": "Programmer Analyst",
+      "bullets": [
+        "Developed and maintained software applications, building foundational backend programming and analytical skills."
+      ]
+    },
+    {
+      "company": "Cisesa Comunicaciones",
+      "location": "",
+      "start": "2006",
+      "end": "2008",
+      "role": "Analyst Developer",
+      "bullets": [
+        "Designed and developed software solutions, contributing to full application lifecycle from requirements through deployment."
+      ]
+    }
+  ],
+  "education": [
+    {
+      "institution": "Universidad César Vallejo",
+      "degree": "B.S.",
+      "field": "Systems Engineering",
+      "year": "2003"
+    }
+  ],
+  "skills": [
+    {
+      "category": "Programming Languages",
+      "items": [
+        "Java",
+        "C#",
+        "SQL",
+        "Python",
+        "JavaScript"
+      ]
+    },
+    {
+      "category": "Backend Frameworks & APIs",
+      "items": [
+        "RESTful API",
+        ".NET Core",
+        ".NET Framework",
+        "ASP.NET Web API",
+        "Swagger/OpenAPI"
+      ]
+    },
+    {
+      "category": "Architecture & Systems Design",
+      "items": [
+        "Microservices",
+        "Distributed Systems",
+        "Service Integration",
+        "Asynchronous Processing"
+      ]
+    },
+    {
+      "category": "Databases & Data Stores",
+      "items": [
+        "SQL Server",
+        "MySQL",
+        "MongoDB",
+        "SQLite"
+      ]
+    },
+    {
+      "category": "Cloud & DevOps",
+      "items": [
+        "Docker",
+        "Kubernetes",
+        "CI/CD Pipelines (Jenkins, GitHub Actions, ArgoCD)",
+        "AWS",
+        "Azure"
+      ]
+    },
+    {
+      "category": "Observability & Reliability",
+      "items": [
+        "Centralized Logging",
+        "Application Monitoring",
+        "Performance Metrics"
+      ]
+    },
+    {
+      "category": "Quality & Testing",
+      "items": [
+        "Unit Testing",
+        "Code Reviews",
+        "Static Code Analysis (SonarQube)"
+      ]
+    },
+    {
+      "category": "Version Control & Collaboration",
+      "items": [
+        "Git",
+        "GitHub",
+        "Jira",
+        "Confluence"
+      ]
+    },
+    {
+      "category": "Frontend (Supporting)",
+      "items": [
+        "Angular",
+        "TypeScript",
+        "JavaScript"
+      ]
+    }
+  ],
+  "languages": [
+    {
+      "lang": "English",
+      "level": "Intermediate"
+    }
+  ]
+}

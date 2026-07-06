@@ -1,0 +1,38 @@
+{
+  "full_job_title": "Backend Developer Senior",
+  "company_name": "Inetum",
+  "location": "San Isidro, Peru",
+  "work_mode": "",
+  "salary": "",
+  "date_posted": "",
+  "remote_mentioned": false,
+  "language": "Spanish",
+  "responsibilities": [
+    "Desarrollar como Backend Developer integrándose al equipo de Inetum"
+  ],
+  "required_skills": [
+    "Profesional en Ingeniería de Sistemas, Computación, Informática o carreras afines",
+    "Mínimo 5 años de experiencia en desarrollo con Java",
+    "Java 1.8",
+    "Spring Boot y Spring Framework",
+    "Creación y manejo de Web Services RESTful/SOAP",
+    "JBoss",
+    "Bases de datos SQL, Oracle",
+    "Manejo de herramientas DevOps como GIT, Bitbucket o equivalentes",
+    "Maven",
+    "Pruebas Unitarias con JUnit",
+    "Uso de IDE de desarrollo y herramientas como POSTMAN y MVC",
+    "Conocimientos en servidores de aplicaciones",
+    "Conocimientos en entornos cloud, especialmente Azure"
+  ],
+  "preferred_skills": [
+    "DataPower",
+    "Certificaciones en metodologías ágiles como Scrum Fundamentales y Kanban",
+    "Certificaciones DevOps Foundation y Azure Foundation"
+  ],
+  "seniority_signals": [
+    "Experiencia mínima de 5 años",
+    "Senior en el título del cargo",
+    "Mid-Senior level (nivel indicado por LinkedIn)"
+  ]
+}
