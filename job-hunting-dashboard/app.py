@@ -113,6 +113,32 @@ def _get_hermes_model() -> str:
     return "unknown"
 
 
+def _unlink_quietly(path: Path) -> None:
+    try:
+        path.unlink()
+    except OSError:
+        pass
+
+
+def _promotion_flag_active(flag_file: Path, completed: bool, stale_minutes: int = 10) -> bool:
+    if not flag_file.exists():
+        return False
+    if completed:
+        _unlink_quietly(flag_file)
+        return False
+
+    try:
+        import time as _time
+        age_minutes = (_time.time() - flag_file.stat().st_mtime) / 60
+    except OSError:
+        return False
+
+    if age_minutes > stale_minutes:
+        _unlink_quietly(flag_file)
+        return False
+    return True
+
+
 # ── Middleware: Cache-Control headers ───────────────────────────────────────
 
 @app.middleware("http")
@@ -395,24 +421,7 @@ async def run_detail(run_id: Optional[str] = Query(None)):
                     _raw_flag_key = f"{row_url}|{row_title}|{row_co}"
                     _flag_key  = hashlib.md5(_raw_flag_key.encode()).hexdigest()
                     _flag_file = PROMOTE_FLAG_DIR / f"{_flag_key}.flag"
-                    promoting = False
-                    try:
-                        if _flag_file.exists():
-                            if cv_path:
-                                # Tailoring done — clean up flag
-                                try: _flag_file.unlink()
-                                except Exception: pass
-                            else:
-                                import time as _time
-                                age_min = (_time.time() - _flag_file.stat().st_mtime) / 60
-                                if age_min > 10:
-                                    # Stale: pipeline max ~6 min; process ended without saving
-                                    try: _flag_file.unlink()
-                                    except Exception: pass
-                                else:
-                                    promoting = True
-                    except Exception:
-                        pass  # filename edge-case: treat as not promoting
+                    promoting = _promotion_flag_active(_flag_file, completed=bool(cv_path))
 
                     rows.append({
                         "rank": i + 1,
@@ -730,16 +739,12 @@ async def set_job_status(request: Request):
     status = body.get("status", "")
     if not key or not status:
         raise HTTPException(status_code=400, detail="key and status are required")
-    from job_store import set_user_status
-    sys.path.insert(0, str(FORGE_SYSTEM_DIR / "pipeline"))
+
+    db = _get_db(JOBS_DB)
     try:
-        exec("from job_store import set_user_status")
-        set_user_status(key, status)
-    except Exception:
-        # Fallback direct db update
-        db = _get_db(JOBS_DB)
         db.execute("UPDATE jobs SET user_status=? WHERE key=?", (status, key))
         db.commit()
+    finally:
         db.close()
     return {"status": "ok", "key": key, "user_status": status}
 
@@ -1276,23 +1281,7 @@ async def custom_job_status(key: str = Query("")):
     # Check flag file for in-progress promote
     flag_key = hashlib.md5(f"custom:{row['url']}".encode()).hexdigest()
     flag_file = CUSTOM_PROMOTE_FLAG_DIR / f"{flag_key}.flag"
-    promoting = False
-    if flag_file.exists():
-        if row["cv_path"]:
-            try:
-                flag_file.unlink()
-            except Exception:
-                pass
-        else:
-            import time as _time
-            age_min = (_time.time() - flag_file.stat().st_mtime) / 60
-            if age_min > 10:
-                try:
-                    flag_file.unlink()
-                except Exception:
-                    pass
-            else:
-                promoting = True
+    promoting = _promotion_flag_active(flag_file, completed=bool(row["cv_path"]))
 
     result["promoting"] = promoting
     return result
