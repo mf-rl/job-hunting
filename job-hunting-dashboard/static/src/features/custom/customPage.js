@@ -76,7 +76,7 @@ function renderCustomView(container) {
     + '<button id="custom-parse-btn" class="btn btn-primary" style="white-space:nowrap;"'
     + (_customParseLoading ? ' disabled' : '') + '>'
     + '<span id="custom-parse-icon">' + (_customParseLoading ? '&#9203;' : '&#128196;') + '</span>'
-    + ' <span id="custom-parse-text">' + (_customParseLoading ? 'Tailoring...' : 'Tailor CV according to JD') + '</span>'
+    + ' <span id="custom-parse-text">' + (_customParseLoading ? 'Parsing...' : 'Parse Job Description') + '</span>'
     + '</button>'
     + '</div>'
     + '<div id="custom-fetch-error" style="margin-top:8px;font-size:12px;color:var(--coral);display:none;"></div>'
@@ -87,8 +87,8 @@ function renderCustomView(container) {
   if (_customParseLoading) {
     loadingHtml = '<div class="card" style="margin-bottom:20px;text-align:center;padding:40px 24px;">'
       + '<div style="font-size:36px;margin-bottom:14px;">&#9203;</div>'
-      + '<div style="font-size:15px;font-weight:700;margin-bottom:6px;">Tailoring CV according to JD...</div>'
-      + '<div style="font-size:13px;color:var(--text-secondary);">Extracting job details and starting the CV tailoring job.</div>'
+      + '<div style="font-size:15px;font-weight:700;margin-bottom:6px;">Parsing entered Job Description...</div>'
+      + '<div style="font-size:13px;color:var(--text-secondary);">Extracting job details.</div>'
       + '</div>';
   }
 
@@ -224,7 +224,7 @@ function renderCustomView(container) {
 
       if (description.length < 80) {
         var errEl = container.querySelector('#custom-fetch-error');
-        if (errEl) { errEl.textContent = 'Paste the full job description before tailoring.'; errEl.style.display = 'block'; }
+        if (errEl) { errEl.textContent = 'Paste the full job description before parsing.'; errEl.style.display = 'block'; }
         return;
       }
 
@@ -240,9 +240,10 @@ function renderCustomView(container) {
         _customParsed = data;
         _customCurrentDescription = data.description || description;
         _customKey = null;
-        customTailorState = 'promoting';
+        customTailorState = 'idle';
         customCvPath = '';
-        return promoteCustomParsedJob(data, container);
+        renderCustomView(container);
+        loadCustomHistory();
       }).catch(function(e) {
         _customParseLoading = false;
         customTailorState = 'idle';
