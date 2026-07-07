@@ -13,6 +13,37 @@ var _customPollTimer = null;
 var _customCurrentDescription = '';    // preserves pasted description across re-renders
 var _customParseLoading = false;
 
+function promoteCustomParsedJob(parsed, container) {
+  return customService.promote({
+    source_ref: parsed.source_ref || '',
+    title: parsed.title,
+    company: parsed.company,
+    description: parsed.description || '',
+    jd_json: parsed.jd_json || '',
+    location: parsed.location || '',
+    remote_mode: parsed.remote_mode || '',
+    salary: parsed.salary || '',
+    date_posted: parsed.date_posted || '',
+  }).then(function(result) {
+    if (result.status === 409) {
+      var d = result.body || {};
+      customTailorState = d.detail && d.detail.indexOf('tailored') > -1 ? 'idle' : 'promoting';
+      renderCustomView(container);
+      loadCustomHistory();
+      return null;
+    }
+    if (!result.ok) throw new Error((result.body && result.body.detail) || 'Promote failed');
+    return result.body;
+  }).then(function(data) {
+    if (!data) return null;
+    _customKey = data.key;
+    customTailorState = 'promoting';
+    renderCustomView(container);
+    pollCustomStatus(_customKey, container);
+    return data;
+  });
+}
+
 function buildCustomView() {
   const div = document.createElement('div');
   div.className = 'fx-view';
@@ -27,14 +58,14 @@ function renderCustomView(container) {
   if (!container) return;
 
   var parsed = _customParsed;
-  var tailorState = _customKey ? (customTailorState || 'idle') : 'idle';
+  var tailorState = customTailorState || 'idle';
   var descriptionValue = _customCurrentDescription || (parsed && parsed.description) || '';
 
   var heroHtml = '<div class="card card-accent" style="margin-bottom:20px;">'
     + '<div class="eyebrow-line">Custom Tailoring</div>'
     + '<h1 class="hero-title">Tailor CV from pasted job description</h1>'
     + '<p style="color:var(--text-secondary);font-size:13px;margin-top:6px;">'
-    + 'Paste the full job description text, parse the details, and tailor your CV specifically for it.'
+    + 'Paste the full job description text and tailor your CV specifically for it.'
     + '</p></div>';
 
   var inputHtml = '<div class="card" style="margin-bottom:20px;">'
@@ -45,9 +76,8 @@ function renderCustomView(container) {
     + '<button id="custom-parse-btn" class="btn btn-primary" style="white-space:nowrap;"'
     + (_customParseLoading ? ' disabled' : '') + '>'
     + '<span id="custom-parse-icon">' + (_customParseLoading ? '&#9203;' : '&#128196;') + '</span>'
-    + ' <span id="custom-parse-text">' + (_customParseLoading ? 'Parsing...' : 'Parse Description') + '</span>'
+    + ' <span id="custom-parse-text">' + (_customParseLoading ? 'Tailoring...' : 'Tailor CV according to JD') + '</span>'
     + '</button>'
-    + '<div style="font-size:12px;color:var(--text-faint);">No URL fetch is performed.</div>'
     + '</div>'
     + '<div id="custom-fetch-error" style="margin-top:8px;font-size:12px;color:var(--coral);display:none;"></div>'
     + '</div>';
@@ -57,8 +87,8 @@ function renderCustomView(container) {
   if (_customParseLoading) {
     loadingHtml = '<div class="card" style="margin-bottom:20px;text-align:center;padding:40px 24px;">'
       + '<div style="font-size:36px;margin-bottom:14px;">&#9203;</div>'
-      + '<div style="font-size:15px;font-weight:700;margin-bottom:6px;">Parsing job description...</div>'
-      + '<div style="font-size:13px;color:var(--text-secondary);">Extracting details from the pasted description with Job Reader.</div>'
+      + '<div style="font-size:15px;font-weight:700;margin-bottom:6px;">Tailoring CV according to JD...</div>'
+      + '<div style="font-size:13px;color:var(--text-secondary);">Extracting job details and starting the CV tailoring job.</div>'
       + '</div>';
   }
 
@@ -194,7 +224,7 @@ function renderCustomView(container) {
 
       if (description.length < 80) {
         var errEl = container.querySelector('#custom-fetch-error');
-        if (errEl) { errEl.textContent = 'Paste the full job description before parsing.'; errEl.style.display = 'block'; }
+        if (errEl) { errEl.textContent = 'Paste the full job description before tailoring.'; errEl.style.display = 'block'; }
         return;
       }
 
@@ -210,12 +240,12 @@ function renderCustomView(container) {
         _customParsed = data;
         _customCurrentDescription = data.description || description;
         _customKey = null;
-        customTailorState = 'idle';
+        customTailorState = 'promoting';
         customCvPath = '';
-        renderCustomView(container);
-        loadCustomHistory();
+        return promoteCustomParsedJob(data, container);
       }).catch(function(e) {
         _customParseLoading = false;
+        customTailorState = 'idle';
         renderCustomView(container);
         var errEl = container.querySelector('#custom-fetch-error');
         if (errEl) { errEl.textContent = 'Error: ' + e.message; errEl.style.display = 'block'; }
@@ -230,38 +260,7 @@ function renderCustomView(container) {
       tailorBtn.disabled = true;
       tailorBtn.innerHTML = '&#9203; Tailoring…';
 
-      customService.promote({
-        source_ref: parsed.source_ref || '',
-        title: parsed.title,
-        company: parsed.company,
-        description: parsed.description || '',
-        jd_json: parsed.jd_json || '',
-        location: parsed.location || '',
-        remote_mode: parsed.remote_mode || '',
-        salary: parsed.salary || '',
-        date_posted: parsed.date_posted || '',
-      }).then(function(result) {
-        if (result.status === 409) {
-          var d = result.body || {};
-          if (d.detail && d.detail.indexOf('tailored') > -1) {
-            customTailorState = 'idle';
-            loadCustomHistory();
-          } else {
-            customTailorState = 'promoting';
-            renderCustomView(container);
-            loadCustomHistory();
-          }
-          return null;
-        }
-        if (!result.ok) throw new Error((result.body && result.body.detail) || 'Promote failed');
-        return result.body;
-      }).then(function(data) {
-        if (!data) return;
-        _customKey = data.key;
-        customTailorState = 'promoting';
-        renderCustomView(container);
-        pollCustomStatus(_customKey, container);
-      }).catch(function(e) {
+      promoteCustomParsedJob(parsed, container).catch(function(e) {
         tailorBtn.disabled = false;
         tailorBtn.innerHTML = '&#128196; Tailor CV';
         var errEl = container.querySelector('#custom-fetch-error');
