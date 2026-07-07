@@ -7,11 +7,11 @@ let customTailorState = 'idle';
 let customCvPath = '';
 // ── Custom CV Tailor page ─────────────────────────────
 
-var _customParsed = null;      // { url, title, company, location, remote_mode, salary, date_posted, jd_json, extracted }
+var _customParsed = null;      // { source_ref, title, company, location, remote_mode, salary, date_posted, jd_json, extracted }
 var _customKey = null;         // key of the job currently being tailored or already tailored
 var _customPollTimer = null;
-var _customCurrentUrl = '';    // preserves input value across re-renders
-var _customFetchLoading = false;
+var _customCurrentDescription = '';    // preserves pasted description across re-renders
+var _customParseLoading = false;
 
 function buildCustomView() {
   const div = document.createElement('div');
@@ -28,42 +28,43 @@ function renderCustomView(container) {
 
   var parsed = _customParsed;
   var tailorState = _customKey ? (customTailorState || 'idle') : 'idle';
-  var urlValue = _customCurrentUrl || (parsed && parsed.url) || '';
+  var descriptionValue = _customCurrentDescription || (parsed && parsed.description) || '';
 
   var heroHtml = '<div class="card card-accent" style="margin-bottom:20px;">'
     + '<div class="eyebrow-line">Custom Tailoring</div>'
-    + '<h1 class="hero-title">Tailor CV from URL</h1>'
+    + '<h1 class="hero-title">Tailor CV from pasted job description</h1>'
     + '<p style="color:var(--text-secondary);font-size:13px;margin-top:6px;">'
-    + 'Enter a job posting URL (LinkedIn, Indeed, etc.) to fetch the job details and tailor your CV specifically for it.'
+    + 'Paste the full job description text, parse the details, and tailor your CV specifically for it.'
     + '</p></div>';
 
   var inputHtml = '<div class="card" style="margin-bottom:20px;">'
-    + '<div class="card-label">Job Post URL</div>'
-    + '<div style="display:flex;gap:10px;align-items:stretch;flex-wrap:wrap;">'
-    + '<input id="custom-url-input" class="fx-input" type="url" placeholder="https://www.linkedin.com/jobs/view/..." '
-    + 'style="flex:1;min-width:200px;" value="' + esc(urlValue) + '">'
-    + '<button id="custom-fetch-btn" class="btn btn-primary" style="white-space:nowrap;"'
-    + (_customFetchLoading ? ' disabled' : '') + '>'
-    + '<span id="custom-fetch-icon">' + (_customFetchLoading ? '&#9203;' : '&#128279;') + '</span>'
-    + ' <span id="custom-fetch-text">' + (_customFetchLoading ? 'Fetching…' : 'Fetch Job') + '</span>'
+    + '<div class="card-label">Job Description</div>'
+    + '<textarea id="custom-description-input" class="fx-input" rows="12" placeholder="Paste the full job description here..." '
+    + 'style="width:100%;min-height:220px;resize:vertical;line-height:1.5;">' + esc(descriptionValue) + '</textarea>'
+    + '<div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:10px;">'
+    + '<button id="custom-parse-btn" class="btn btn-primary" style="white-space:nowrap;"'
+    + (_customParseLoading ? ' disabled' : '') + '>'
+    + '<span id="custom-parse-icon">' + (_customParseLoading ? '&#9203;' : '&#128196;') + '</span>'
+    + ' <span id="custom-parse-text">' + (_customParseLoading ? 'Parsing...' : 'Parse Description') + '</span>'
     + '</button>'
+    + '<div style="font-size:12px;color:var(--text-faint);">No URL fetch is performed.</div>'
     + '</div>'
     + '<div id="custom-fetch-error" style="margin-top:8px;font-size:12px;color:var(--coral);display:none;"></div>'
     + '</div>';
 
   // Loading panel — shown while parse is in progress
   var loadingHtml = '';
-  if (_customFetchLoading) {
+  if (_customParseLoading) {
     loadingHtml = '<div class="card" style="margin-bottom:20px;text-align:center;padding:40px 24px;">'
       + '<div style="font-size:36px;margin-bottom:14px;">&#9203;</div>'
-      + '<div style="font-size:15px;font-weight:700;margin-bottom:6px;">Reading job posting…</div>'
-      + '<div style="font-size:13px;color:var(--text-secondary);">Fetching the page and extracting details with AI. This can take up to 60 seconds.</div>'
+      + '<div style="font-size:15px;font-weight:700;margin-bottom:6px;">Parsing job description...</div>'
+      + '<div style="font-size:13px;color:var(--text-secondary);">Extracting details from the pasted description with Job Reader.</div>'
       + '</div>';
   }
 
   // Details panel — shown after a successful fetch
   var detailsHtml = '';
-  if (!_customFetchLoading && parsed) {
+  if (!_customParseLoading && parsed) {
     var modeColor = parsed.remote_mode === 'remote' ? 'var(--teal)' : parsed.remote_mode === 'hybrid' ? 'var(--gold)' : 'var(--text-secondary)';
     var modeLabel = parsed.remote_mode || 'not specified';
 
@@ -158,9 +159,12 @@ function renderCustomView(container) {
       ? '<a href="/api/cv-pdf?path=' + encodedCv + '" class="btn btn-ghost" style="text-decoration:none;" target="_blank">PDF</a>'
       : '<span class="btn btn-ghost" style="opacity:0.4;pointer-events:none;">PDF</span>';
 
+    var originalLinkHtml = parsed.url && parsed.url.match(/^https?:\/\//i)
+      ? '<a href="' + esc(parsed.url) + '" target="_blank" rel="noopener" style="font-size:13px;color:var(--text-faint);text-decoration:none;margin-left:4px;" title="Open original posting">&#8599; View Original</a>'
+      : '';
+
     detailsHtml += '<div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-top:12px;border-top:1px solid var(--border-light);">'
-      + tailorBtnHtml + ' ' + docBtnHtml + ' ' + pdfBtnHtml
-      + '<a href="' + esc(parsed.url) + '" target="_blank" rel="noopener" style="font-size:13px;color:var(--text-faint);text-decoration:none;margin-left:4px;" title="Open original posting">&#8599; View Original</a>'
+      + tailorBtnHtml + ' ' + docBtnHtml + ' ' + pdfBtnHtml + originalLinkHtml
       + '</div>'
       + '</div>';
   }
@@ -173,46 +177,45 @@ function renderCustomView(container) {
 
   container.innerHTML = heroHtml + inputHtml + loadingHtml + detailsHtml + historyHtml;
 
-  // ── Wire fetch button using container.querySelector (works even before DOM attach) ──
-  var fetchBtn = container.querySelector('#custom-fetch-btn');
-  var urlInput = container.querySelector('#custom-url-input');
+  // ── Wire parse button using container.querySelector (works even before DOM attach) ──
+  var parseBtn = container.querySelector('#custom-parse-btn');
+  var descriptionInput = container.querySelector('#custom-description-input');
 
-  if (urlInput) {
-    urlInput.addEventListener('input', function() {
-      _customCurrentUrl = urlInput.value.trim();
+  if (descriptionInput) {
+    descriptionInput.addEventListener('input', function() {
+      _customCurrentDescription = descriptionInput.value.trim();
     });
   }
 
-  if (fetchBtn && urlInput) {
-    fetchBtn.addEventListener('click', function() {
-      var url = urlInput.value.trim();
-      _customCurrentUrl = url;
+  if (parseBtn && descriptionInput) {
+    parseBtn.addEventListener('click', function() {
+      var description = descriptionInput.value.trim();
+      _customCurrentDescription = description;
 
-      if (!url || !url.match(/^https?:\/\//i)) {
+      if (description.length < 80) {
         var errEl = container.querySelector('#custom-fetch-error');
-        if (errEl) { errEl.textContent = 'Please enter a valid http(s) URL.'; errEl.style.display = 'block'; }
+        if (errEl) { errEl.textContent = 'Paste the full job description before parsing.'; errEl.style.display = 'block'; }
         return;
       }
 
-      // Show loading state immediately
-      _customFetchLoading = true;
+      _customParseLoading = true;
       _customParsed = null;
       _customKey = null;
       customTailorState = 'idle';
       customCvPath = '';
       renderCustomView(container);
 
-      customService.parseUrl(url).then(function(data) {
-        _customFetchLoading = false;
+      customService.parseDescription(description).then(function(data) {
+        _customParseLoading = false;
         _customParsed = data;
-        _customCurrentUrl = data.url || url;
+        _customCurrentDescription = data.description || description;
         _customKey = null;
         customTailorState = 'idle';
         customCvPath = '';
         renderCustomView(container);
         loadCustomHistory();
       }).catch(function(e) {
-        _customFetchLoading = false;
+        _customParseLoading = false;
         renderCustomView(container);
         var errEl = container.querySelector('#custom-fetch-error');
         if (errEl) { errEl.textContent = 'Error: ' + e.message; errEl.style.display = 'block'; }
@@ -228,9 +231,10 @@ function renderCustomView(container) {
       tailorBtn.innerHTML = '&#9203; Tailoring…';
 
       customService.promote({
-        url: parsed.url,
+        source_ref: parsed.source_ref || '',
         title: parsed.title,
         company: parsed.company,
+        description: parsed.description || '',
         jd_json: parsed.jd_json || '',
         location: parsed.location || '',
         remote_mode: parsed.remote_mode || '',
@@ -245,7 +249,7 @@ function renderCustomView(container) {
           } else {
             customTailorState = 'promoting';
             renderCustomView(container);
-            pollCustomStatus(_customKey || ('custom:' + parsed.url.slice(-16)), container);
+            loadCustomHistory();
           }
           return null;
         }
@@ -326,6 +330,9 @@ function loadCustomHistory() {
           ? '<a href="/api/cv-pdf?path=' + encodedCv + '" class="btn btn-ghost" style="padding:2px 8px;font-size:10px;text-decoration:none;" target="_blank">PDF</a>'
           : '<span class="btn btn-ghost" style="padding:2px 8px;font-size:10px;opacity:0.4;pointer-events:none;">PDF</span>';
         var modeColor = j.remote_mode === 'remote' ? 'var(--teal)' : j.remote_mode === 'hybrid' ? 'var(--gold)' : 'var(--text-faint)';
+        var sourceLink = j.url && j.url.match(/^https?:\/\//i)
+          ? '<a href="' + esc(j.url) + '" target="_blank" rel="noopener" style="padding:2px 6px;font-size:14px;color:var(--text-faint);text-decoration:none;" title="Open original">&#8599;</a>'
+          : '';
         html += '<tr>'
           + '<td style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="' + esc(j.title) + '">' + esc(j.title) + '</td>'
           + '<td style="max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--text-secondary);">' + esc(j.company) + '</td>'
@@ -333,9 +340,7 @@ function loadCustomHistory() {
           + '<td style="font-size:11px;font-weight:600;color:' + modeColor + ';">' + esc(j.remote_mode || '—') + '</td>'
           + '<td>' + statusBadge + '</td>'
           + '<td style="font-size:11px;color:var(--text-faint);">' + esc((j.created_at || '').slice(0, 10)) + '</td>'
-          + '<td><div style="display:flex;gap:4px;">' + docBtn + pdfBtn
-            + '<a href="' + esc(j.url) + '" target="_blank" rel="noopener" style="padding:2px 6px;font-size:14px;color:var(--text-faint);text-decoration:none;" title="Open original">&#8599;</a>'
-          + '</div></td>'
+          + '<td><div style="display:flex;gap:4px;">' + docBtn + pdfBtn + sourceLink + '</div></td>'
           + '</tr>';
       });
       html += '</tbody></table></div>';

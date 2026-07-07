@@ -2,7 +2,7 @@
 import { getJson, postJson, requestJson } from '../../shared/api/apiClient.js';
 
 export const customService = {
-  parseUrl: (url) => postJson('/api/custom/parse-url', { url }),
+  parseDescription: (description) => postJson('/api/custom/parse-description', { description }),
   listJobs: () => getJson('/api/custom/jobs'),
   getStatus: (key) => getJson(`/api/custom/status?key=${encodeURIComponent(key)}`),
   async promote(payload) {

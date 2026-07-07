@@ -110,7 +110,7 @@ Version Control & Collaboration: Git, GitHub, Jira, Confluence
 Frontend (Supporting): Angular, TypeScript, JavaScript
 
 ADDITIONAL INFORMATION
-Languages: English (Intermediate – professional working proficiency)
+Languages: English (Intermediate – professional working proficiency), Spanish (Native)
 Methodologies: Agile / Scrum
 Availability: Full-time remote
 

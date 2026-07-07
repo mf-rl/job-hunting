@@ -309,40 +309,45 @@ def _parse_llm_json(text: str) -> dict | None:
 def main():
     import argparse
     parser = argparse.ArgumentParser(description="Fetch and extract job description")
-    parser.add_argument("url", help="Job listing URL")
-    parser.add_argument("--description", help="Stored description from search step (fallback)")
+    parser.add_argument("url", help="Job listing URL or pasted-job-description sentinel")
+    parser.add_argument("--description", help="Stored or pasted job description text")
+    parser.add_argument("--description-only", action="store_true", help="Skip URL fetching and extract only from --description")
     args = parser.parse_args()
 
     url = args.url
     log_activity("job-reader", f"reading job: {url[:80]}", "running", NO_MODEL_REQUIRED)
 
-    # Step 1: LinkedIn-specific: try guest API first (avoids login-wall)
-    page_text = None
-    source = "http_fetch"
-    li_id = _linkedin_job_id(url)
-    if li_id:
-        page_text = fetch_linkedin_guest(li_id)
-        if page_text:
-            source = "linkedin_guest"
-            print(f"LinkedIn guest API returned {len(page_text)} chars", file=sys.stderr)
-
-    # Step 2: Generic HTTP fetch (fallback for LinkedIn and default for other sites)
-    if not page_text or len(page_text) < 200:
-        print(f"Fetching: {url[:100]}...", file=sys.stderr)
-        page_text = fetch_url_text(url)
+    if args.description_only:
+        page_text = (args.description or "").strip()
+        source = "pasted_description"
+        if not page_text:
+            log_activity("job-reader", "failed to extract JD from pasted description", "failed", NO_MODEL_REQUIRED)
+            print(json.dumps({"error": "Job description text is required", "url": url}), file=sys.stderr)
+            sys.exit(1)
+    else:
+        page_text = None
         source = "http_fetch"
+        li_id = _linkedin_job_id(url)
+        if li_id:
+            page_text = fetch_linkedin_guest(li_id)
+            if page_text:
+                source = "linkedin_guest"
+                print(f"LinkedIn guest API returned {len(page_text)} chars", file=sys.stderr)
 
-    # Step 3: Fallback to stored description
-    if not page_text or len(page_text) < 200:
-        if args.description:
-            print("HTTP fetch returned thin content, using stored description", file=sys.stderr)
-            page_text = args.description
-            source = "stored_description"
-        else:
-            print("WARNING: No usable page text and no stored description", file=sys.stderr)
-            page_text = ""
+        if not page_text or len(page_text) < 200:
+            print(f"Fetching: {url[:100]}...", file=sys.stderr)
+            page_text = fetch_url_text(url)
+            source = "http_fetch"
 
-    # Step 4: Extract with LLM
+        if not page_text or len(page_text) < 200:
+            if args.description:
+                print("HTTP fetch returned thin content, using stored description", file=sys.stderr)
+                page_text = args.description
+                source = "stored_description"
+            else:
+                print("WARNING: No usable page text and no stored description", file=sys.stderr)
+                page_text = ""
+
     if page_text:
         extracted = extract_with_llm(page_text, url)
         if extracted:
@@ -357,22 +362,22 @@ def main():
             log_activity("job-reader", f"extracted JD: {extracted.get('full_job_title', '?')} @ {extracted.get('company_name', '?')}", "completed")
             return
 
-        # Step 5: LLM failed — try regex fallback (LinkedIn guest API HTML only)
-        print("LLM failed; trying regex fallback on raw HTML...", file=sys.stderr)
-        raw_html = _LI_RAW_HTML[0]
-        if raw_html:
-            extracted = _extract_linkedin_fields(raw_html)
-            if extracted:
-                result = {
-                    "url": url,
-                    "source": "linkedin_regex_fallback",
-                    "extracted": extracted,
-                    "full_text_length": len(page_text),
-                    "full_text_preview": page_text[:5000],
-                }
-                print(json.dumps(result, indent=2))
-                log_activity("job-reader", f"extracted JD (regex): {extracted.get('full_job_title', '?')} @ {extracted.get('company_name', '?')}", "completed", NO_MODEL_REQUIRED)
-                return
+        if not args.description_only:
+            print("LLM failed; trying regex fallback on raw HTML...", file=sys.stderr)
+            raw_html = _LI_RAW_HTML[0]
+            if raw_html:
+                extracted = _extract_linkedin_fields(raw_html)
+                if extracted:
+                    result = {
+                        "url": url,
+                        "source": "linkedin_regex_fallback",
+                        "extracted": extracted,
+                        "full_text_length": len(page_text),
+                        "full_text_preview": page_text[:5000],
+                    }
+                    print(json.dumps(result, indent=2))
+                    log_activity("job-reader", f"extracted JD (regex): {extracted.get('full_job_title', '?')} @ {extracted.get('company_name', '?')}", "completed", NO_MODEL_REQUIRED)
+                    return
 
     log_activity(
         "job-reader",

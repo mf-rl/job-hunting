@@ -182,6 +182,54 @@ def _extract_json(text: str) -> dict | None:
     return None
 
 
+def _language_level(raw: str) -> str:
+    value = raw.lower()
+    if "native" in value or "nativo" in value:
+        return "Native"
+    if "fluent" in value or "fluido" in value or "advanced" in value or "avanzado" in value:
+        return "Fluent"
+    if "intermediate" in value or "intermedio" in value or "working" in value:
+        return "Intermediate"
+    if "basic" in value or "basico" in value or "básico" in value:
+        return "Basic"
+    return raw.strip() or ""
+
+
+def merge_structured_cv_from_text(structured: dict, cv_text: str) -> dict:
+    """Recover deterministic fields the LLM sometimes misses from the raw CV text."""
+    if not isinstance(structured, dict):
+        return structured
+
+    if not structured.get("name"):
+        first_line = next((line.strip() for line in cv_text.splitlines() if line.strip()), "")
+        if first_line:
+            structured["name"] = first_line
+
+    match = re.search(r"(?im)^\s*Languages?\s*:\s*(.+)$", cv_text)
+    if not match:
+        return structured
+
+    aliases = {
+        "english": "English", "ingles": "English", "inglés": "English",
+        "spanish": "Spanish", "espanol": "Spanish", "español": "Spanish",
+    }
+    languages = structured.get("languages") if isinstance(structured.get("languages"), list) else []
+    seen = {str(item.get("lang", "")).strip().lower() for item in languages if isinstance(item, dict)}
+
+    for part in match.group(1).split(","):
+        parsed = re.match(r"([A-Za-zÁÉÍÓÚáéíóúÑñ]+)\s*(?:\(([^)]*)\))?", part.strip())
+        if not parsed:
+            continue
+        lang = aliases.get(parsed.group(1).lower(), parsed.group(1).strip())
+        if lang.lower() in seen:
+            continue
+        languages.append({"lang": lang, "level": _language_level(parsed.group(2) or "")})
+        seen.add(lang.lower())
+
+    structured["languages"] = languages
+    return structured
+
+
 def call_cv_adapter(cv_text: str) -> dict | None:
     """Call the CV Adapter Hermes profile to structure the CV."""
     prompt = STRUCTURE_PROMPT + cv_text
@@ -310,6 +358,7 @@ def main():
     # 3) Call CV Adapter to structure
     structured = call_cv_adapter(cv_text)
     if structured:
+        structured = merge_structured_cv_from_text(structured, cv_text)
         fd, tmp_path = tempfile.mkstemp(suffix=".json", dir=str(CV_DIR))
         try:
             with os.fdopen(fd, "w") as f:

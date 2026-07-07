@@ -107,6 +107,68 @@ def make_run_id() -> str:
     return datetime.now().strftime("run_%Y%m%d_%H%M%S")
 
 
+_COUNTRY_ALIASES = {
+    "us": ("united states", "usa", "us"), "es": ("spain", "espana", "españa"),
+    "gb": ("united kingdom", "uk", "england", "scotland", "wales", "northern ireland"),
+    "de": ("germany", "deutschland"), "fr": ("france",), "ca": ("canada",),
+    "au": ("australia",), "br": ("brazil", "brasil"), "in": ("india",),
+    "nl": ("netherlands", "holland"), "it": ("italy", "italia"),
+    "ch": ("switzerland", "schweiz", "suisse"), "at": ("austria",),
+    "be": ("belgium",), "pl": ("poland", "polska"), "za": ("south africa",),
+    "sg": ("singapore",), "hk": ("hong kong",), "ie": ("ireland",),
+    "nz": ("new zealand",), "se": ("sweden", "sverige"),
+    "ae": ("united arab emirates", "uae"), "sa": ("saudi arabia",),
+    "mx": ("mexico", "méxico"), "ar": ("argentina",), "cl": ("chile",), "co": ("colombia",),
+}
+
+
+def selected_country_codes(profile: dict) -> set[str]:
+    return {c.strip().lower() for c in str(profile.get("country", "us")).split(",") if c.strip()}
+
+
+def _normalized_location_text(value: str) -> str:
+    return re.sub(r"\s+", " ", re.sub(r"[^a-z0-9áéíóúñ]+", " ", value.lower())).strip()
+
+
+def _codes_in_location(text: str) -> set[str]:
+    normalized = f" {_normalized_location_text(text)} "
+    found: set[str] = set()
+    for code, aliases in _COUNTRY_ALIASES.items():
+        for alias in aliases:
+            alias_norm = _normalized_location_text(alias)
+            if alias_norm and f" {alias_norm} " in normalized:
+                found.add(code)
+                break
+    return found
+
+
+def listing_country_codes(listing: dict) -> set[str]:
+    source = str(listing.get("source", "")).lower()
+    if source.startswith("adzuna_"):
+        return {source.split("_", 1)[1]}
+    if source == "reed":
+        return {"gb"}
+    location = listing.get("location") or {}
+    location_text = location.get("display_name", "") if isinstance(location, dict) else str(location)
+    return _codes_in_location(location_text)
+
+
+def filter_by_selected_countries(listings: list[dict], selected: set[str], notes: list[str]) -> list[dict]:
+    if not selected:
+        return listings
+    kept = []
+    dropped = 0
+    for listing in listings:
+        codes = listing_country_codes(listing)
+        if not codes or codes & selected:
+            kept.append(listing)
+        else:
+            dropped += 1
+    if dropped:
+        notes.append(f"Country filter: dropped {dropped} listings outside selected countries ({', '.join(sorted(selected))})")
+    return kept
+
+
 # ── Adzuna ──────────────────────────────────────────────────────────────────
 
 ADZUNA_BASE = "https://api.adzuna.com/v1/api/jobs"
@@ -123,6 +185,9 @@ def fetch_adzuna(profile: dict, notes: list) -> list[dict]:
 
     countries = [c.strip() for c in profile.get("country", "us").split(",") if c.strip()]
     queries = profile.get("search_queries", [])
+    if len(queries) > 6:
+        notes.append(f"Adzuna: capped queries from {len(queries)} to 6 to keep search under timeout")
+        queries = queries[:6]
     pages = profile.get("pages", 2)
     rpp = profile.get("results_per_page", 60)
     max_days = profile.get("max_days_old", 120)
@@ -1052,6 +1117,8 @@ def main():
         if key not in all_seen:
             all_seen.add(key)
             merged.append(listing)
+
+    merged = filter_by_selected_countries(merged, selected_country_codes(profile), notes)
 
     per_source: dict[str, int] = {}
     for l in merged:

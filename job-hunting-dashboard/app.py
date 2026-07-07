@@ -1160,30 +1160,29 @@ def _get_custom_db() -> sqlite3.Connection:
     return conn
 
 
-@app.post("/api/custom/parse-url")
-async def custom_parse_url(request: Request):
-    """Fetch a job posting URL and extract structured details via job_reader."""
+@app.post("/api/custom/parse-description")
+async def custom_parse_description(request: Request):
+    """Extract structured job details from pasted job-description text."""
     body = await request.json()
-    url = (body.get("url") or "").strip()
-    if not url or not url.startswith(("http://", "https://")):
-        raise HTTPException(status_code=400, detail="A valid http(s) URL is required")
+    description = (body.get("description") or "").strip()
+    if len(description) < 80:
+        raise HTTPException(status_code=400, detail="Paste the full job description before parsing")
 
     import subprocess, sys as _sys
     venv_python = Path(_sys.executable)
     reader_script = FORGE_SYSTEM_DIR / "pipeline" / "job_reader.py"
     env = os.environ.copy()
+    source_ref = "pasted:" + hashlib.md5(description.encode()).hexdigest()[:16]
 
     try:
         r = subprocess.run(
-            [str(venv_python), str(reader_script), url],
+            [str(venv_python), str(reader_script), source_ref, "--description", description, "--description-only"],
             capture_output=True, text=True, timeout=180,
             env={**env, "FORGE_SYSTEM_DIR": str(FORGE_SYSTEM_DIR), "HERMES_HOME": str(HERMES_HOME)},
         )
         output = r.stdout.strip()
         if not output:
-            # Surface the real error from stderr (LLM failure reason, rate limit, etc.)
-            stderr_lines = [l for l in (r.stderr or "").splitlines()
-                            if l.strip() and not l.startswith("Trying LinkedIn")]
+            stderr_lines = [l for l in (r.stderr or "").splitlines() if l.strip()]
             detail = "\n".join(stderr_lines).strip()[:400] or "No output from job_reader"
             raise HTTPException(status_code=422, detail=detail)
 
@@ -1193,14 +1192,15 @@ async def custom_parse_url(request: Request):
 
         extracted = data.get("extracted", {})
         return {
-            "url": url,
+            "source_ref": source_ref,
+            "url": "",
             "title": extracted.get("full_job_title", ""),
             "company": extracted.get("company_name", ""),
             "location": extracted.get("location", ""),
             "remote_mode": extracted.get("work_mode", ""),
             "salary": extracted.get("salary", ""),
             "date_posted": extracted.get("date_posted", ""),
-            "description": data.get("full_text_preview", ""),
+            "description": description,
             "extracted": extracted,
             "jd_json": json.dumps(data),
         }
@@ -1214,23 +1214,27 @@ async def custom_parse_url(request: Request):
 
 @app.post("/api/custom/promote")
 async def custom_promote(request: Request):
-    """Tailor CV for a custom job URL. Saves result to custom_jobs.db."""
+    """Tailor CV for a pasted custom job description. Saves result to custom_jobs.db."""
     body = await request.json()
-    url = body.get("url", "")
-    title = body.get("title", "")
-    company = body.get("company", "")
+    title = (body.get("title") or "").strip()
+    company = (body.get("company") or "").strip()
+    description = (body.get("description") or "").strip()
     jd_json_str = body.get("jd_json", "")
     location = body.get("location", "")
     remote_mode = body.get("remote_mode", "")
     salary = body.get("salary", "")
     date_posted = body.get("date_posted", "")
+    source_ref = (body.get("source_ref") or body.get("url") or "").strip()
 
-    if not url or not title or not company:
-        raise HTTPException(status_code=400, detail="url, title and company are required")
+    if not title or not company:
+        raise HTTPException(status_code=400, detail="title and company are required")
+    if not jd_json_str and not description:
+        raise HTTPException(status_code=400, detail="job description is required")
+    if not source_ref:
+        source_ref = "pasted:" + hashlib.md5((jd_json_str or description).encode()).hexdigest()[:16]
 
-    key = "custom:" + hashlib.md5(url.encode()).hexdigest()[:16]
+    key = "custom:" + hashlib.md5(source_ref.encode()).hexdigest()[:16]
 
-    # Upsert into custom_jobs.db
     db = _get_custom_db()
     existing = db.execute("SELECT cv_path, status FROM custom_jobs WHERE key=?", (key,)).fetchone()
     if existing and existing["cv_path"]:
@@ -1241,13 +1245,12 @@ async def custom_promote(request: Request):
             "INSERT INTO custom_jobs "
             "(key, title, company, url, status, jd_json, location, remote_mode, salary, date_posted)"
             " VALUES (?,?,?,?,'seen',?,?,?,?,?)",
-            (key, title, company, url, jd_json_str, location, remote_mode, salary, date_posted),
+            (key, title, company, source_ref, jd_json_str, location, remote_mode, salary, date_posted),
         )
         db.commit()
     db.close()
 
-    # Prevent duplicate concurrent promotes
-    flag_key = hashlib.md5(f"custom:{url}".encode()).hexdigest()
+    flag_key = hashlib.md5(f"custom:{source_ref}".encode()).hexdigest()
     flag_file = CUSTOM_PROMOTE_FLAG_DIR / f"{flag_key}.flag"
     CUSTOM_PROMOTE_FLAG_DIR.mkdir(parents=True, exist_ok=True)
     if flag_file.exists():
@@ -1257,15 +1260,7 @@ async def custom_promote(request: Request):
     import subprocess, sys as _sys
     venv_python = Path(_sys.executable)
     promote_script = FORGE_SYSTEM_DIR / "pipeline" / "promote_custom_job.py"
-
-    cmd = [
-        str(venv_python), str(promote_script),
-        url,
-        "--title", title,
-        "--company", company,
-        "--key", key,
-        "--db-path", str(CUSTOM_JOBS_DB),
-    ]
+    cmd = [str(venv_python), str(promote_script), source_ref, "--title", title, "--company", company, "--key", key, "--db-path", str(CUSTOM_JOBS_DB)]
     if jd_json_str:
         cmd += ["--jd-json", jd_json_str]
 
