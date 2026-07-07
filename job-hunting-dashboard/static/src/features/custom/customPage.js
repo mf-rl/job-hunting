@@ -36,10 +36,17 @@ function promoteCustomParsedJob(parsed, container) {
     return result.body;
   }).then(function(data) {
     if (!data) return null;
-    _customKey = data.key;
+    _customKey = data.key || _customKey;
+    if (data.cv_path) {
+      customCvPath = data.cv_path.split('/').pop();
+      customTailorState = 'done';
+      renderCustomView(container);
+      loadCustomHistory();
+      return data;
+    }
     customTailorState = 'promoting';
     renderCustomView(container);
-    pollCustomStatus(_customKey, container);
+    if (_customKey) pollCustomStatus(_customKey, container);
     return data;
   });
 }
@@ -261,9 +268,12 @@ function renderCustomView(container) {
       tailorBtn.disabled = true;
       tailorBtn.innerHTML = '&#9203; Tailoring…';
 
+      customTailorState = 'promoting';
+      renderCustomView(container);
+
       promoteCustomParsedJob(parsed, container).catch(function(e) {
-        tailorBtn.disabled = false;
-        tailorBtn.innerHTML = '&#128196; Tailor CV';
+        customTailorState = 'idle';
+        renderCustomView(container);
         var errEl = container.querySelector('#custom-fetch-error');
         if (errEl) { errEl.textContent = 'Tailor error: ' + e.message; errEl.style.display = 'block'; }
       });

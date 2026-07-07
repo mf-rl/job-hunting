@@ -1238,8 +1238,9 @@ async def custom_promote(request: Request):
     db = _get_custom_db()
     existing = db.execute("SELECT cv_path, status FROM custom_jobs WHERE key=?", (key,)).fetchone()
     if existing and existing["cv_path"]:
+        cv_path = existing["cv_path"]
         db.close()
-        raise HTTPException(status_code=409, detail="Already tailored — use the existing DOC/PDF buttons")
+        return {"status": "tailored", "key": key, "cv_path": cv_path}
     if not existing:
         db.execute(
             "INSERT INTO custom_jobs "
@@ -1254,7 +1255,7 @@ async def custom_promote(request: Request):
     flag_file = CUSTOM_PROMOTE_FLAG_DIR / f"{flag_key}.flag"
     CUSTOM_PROMOTE_FLAG_DIR.mkdir(parents=True, exist_ok=True)
     if flag_file.exists():
-        raise HTTPException(status_code=409, detail="Already being promoted — please wait")
+        return {"status": "promoting", "key": key}
     flag_file.write_text("promoting")
 
     import subprocess, sys as _sys
