@@ -1069,15 +1069,26 @@ async def cv_docx(path: str = Query("")):
     else:
         docx_path = safe
 
-    if not docx_path.exists():
-        # Run cv_docx.py to generate it
-        import subprocess, sys
-        venv_python = Path(sys.executable)
-        cv_docx_script = FORGE_SYSTEM_DIR / "pipeline" / "cv_docx.py"
-        subprocess.run(
-            [str(venv_python), str(cv_docx_script), str(safe), "--output", str(docx_path)],
-            capture_output=True, timeout=30,
+    import subprocess, sys
+    venv_python = Path(sys.executable)
+    cv_docx_script = FORGE_SYSTEM_DIR / "pipeline" / "cv_docx.py"
+    should_generate = not docx_path.exists()
+    if not should_generate and safe.suffix == ".json":
+        should_generate = docx_path.stat().st_mtime < max(
+            safe.stat().st_mtime,
+            cv_docx_script.stat().st_mtime,
         )
+
+    if should_generate:
+        result = subprocess.run(
+            [str(venv_python), str(cv_docx_script), str(safe), "--output", str(docx_path)],
+            capture_output=True, text=True, timeout=30,
+        )
+        if result.returncode != 0:
+            raise HTTPException(
+                status_code=500,
+                detail=f"DOCX generation failed: {result.stderr[:300] or result.stdout[:300]}",
+            )
 
     if not docx_path.exists():
         raise HTTPException(status_code=500, detail="Could not generate .docx")
@@ -1100,10 +1111,20 @@ async def cv_pdf(path: str = Query("")):
     json_path = safe if safe.suffix == ".json" else safe.with_suffix(".json")
     pdf_path  = safe.with_suffix(".pdf")
 
-    if not pdf_path.exists():
-        import subprocess, sys
-        venv_python = Path(sys.executable)
-        cv_pdf_script = FORGE_SYSTEM_DIR / "pipeline" / "cv_pdf.py"
+    if not json_path.exists():
+        raise HTTPException(status_code=400, detail="Invalid or non-existent CV JSON source")
+
+    import subprocess, sys
+    venv_python = Path(sys.executable)
+    cv_pdf_script = FORGE_SYSTEM_DIR / "pipeline" / "cv_pdf.py"
+    should_generate = not pdf_path.exists()
+    if not should_generate:
+        should_generate = pdf_path.stat().st_mtime < max(
+            json_path.stat().st_mtime,
+            cv_pdf_script.stat().st_mtime,
+        )
+
+    if should_generate:
         r = subprocess.run(
             [str(venv_python), str(cv_pdf_script), str(json_path), "--output", str(pdf_path)],
             capture_output=True, text=True, timeout=30,
